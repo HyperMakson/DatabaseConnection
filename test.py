@@ -9,8 +9,6 @@ from random import randint
 class MainWindow(QMainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
-        '''self.window1 = AnotherWindow()
-        self.window2 = AnotherWindow()'''
         self.setWindowTitle("My Awesome App")
         self.centralWidget = QPushButton("Employee")
         self.centralWidget.clicked.connect(self.onEmployeeBtnClicked)
