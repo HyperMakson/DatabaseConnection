@@ -214,13 +214,22 @@ background-color: #EAFFD0;
       <property name="styleSheet">
        <string notr="true">QTableView {
 background-color: #EAFFD0;
-border-radius: 10px;
-border: 1px solid #AA96DA;
+border-bottom-right-radius: 10px;
+border: 1px solid gray;
 }
 QTableView::section {
 background-color: #AA96DA;
 color: #FCE38A;
 border: none;
+}
+QHeaderView {
+background-color: #EAFFD0;
+}
+QHeaderView::section {
+background-color: #AA96DA;
+color: #FCE38A;
+border: none;
+font: bold;
 }
 QTableView::item {
 border-style: none;

@@ -9,7 +9,6 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 import design.resources
 
-
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -127,13 +126,22 @@ class Ui_MainWindow(object):
         self.view_records = QtWidgets.QTableView(parent=self.centralwidget)
         self.view_records.setStyleSheet("QTableView {\n"
 "background-color: #EAFFD0;\n"
-"border-radius: 10px;\n"
-"border: 1px solid #AA96DA;\n"
+"border-bottom-right-radius: 10px;\n"
+"border: 1px solid gray;\n"
 "}\n"
 "QTableView::section {\n"
 "background-color: #AA96DA;\n"
 "color: #FCE38A;\n"
 "border: none;\n"
+"}\n"
+"QHeaderView {\n"
+"background-color: #EAFFD0;\n"
+"}\n"
+"QHeaderView::section {\n"
+"background-color: #AA96DA;\n"
+"color: #FCE38A;\n"
+"border: none;\n"
+"font: bold;\n"
 "}\n"
 "QTableView::item {\n"
 "border-style: none;\n"
