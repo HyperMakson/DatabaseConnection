@@ -210,6 +210,26 @@ background-color: #EAFFD0;
      </layout>
     </item>
     <item>
+     <widget class="QComboBox" name="comboBox_name_tables">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QComboBox {
+background-color: #AA96DA;
+border-top-left-radius: 10px;
+border-bottom-left-radius: 10px;
+color: #FCE38A;
+font-size: 14px;
+border: 1px solid white
+}</string>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QTableView" name="view_records">
       <property name="styleSheet">
        <string notr="true">QTableView {
@@ -229,7 +249,7 @@ QHeaderView::section {
 background-color: #AA96DA;
 color: #FCE38A;
 border: none;
-font: bold;
+font-weight: bold;
 }
 QTableView::item {
 border-style: none;

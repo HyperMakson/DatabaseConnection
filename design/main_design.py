@@ -8,6 +8,7 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 import design.resources
+from connection import Data
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -123,6 +124,20 @@ class Ui_MainWindow(object):
         self.btn_del_entry.setObjectName("btn_del_entry")
         self.horizontalLayout.addWidget(self.btn_del_entry)
         self.verticalLayout.addLayout(self.horizontalLayout)
+        self.comboBox_name_tables = QtWidgets.QComboBox(parent=self.centralwidget)
+        self.comboBox_name_tables.setMinimumSize(QtCore.QSize(0, 25))
+        self.comboBox_name_tables.setStyleSheet("QComboBox {\n"
+"background-color: #AA96DA;\n"
+"border-top-left-radius: 10px;\n"
+"border-bottom-left-radius: 10px;\n"
+"color: #FCE38A;\n"
+"font-size: 14px;\n"
+"border: 1px solid white\n"
+"}")
+        self.comboBox_name_tables.setObjectName("comboBox_name_tables")
+        self.edit_ui = Data()
+        self.comboBox_name_tables.addItems(self.edit_ui.arr_table_name)
+        self.verticalLayout.addWidget(self.comboBox_name_tables)
         self.view_records = QtWidgets.QTableView(parent=self.centralwidget)
         self.view_records.setStyleSheet("QTableView {\n"
 "background-color: #EAFFD0;\n"
@@ -141,7 +156,7 @@ class Ui_MainWindow(object):
 "background-color: #AA96DA;\n"
 "color: #FCE38A;\n"
 "border: none;\n"
-"font: bold;\n"
+"font-weight: bold;\n"
 "}\n"
 "QTableView::item {\n"
 "border-style: none;\n"

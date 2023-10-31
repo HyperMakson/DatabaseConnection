@@ -31,6 +31,12 @@ class Data:
                 prodcount = query.value(3)
                 pricee = query.value(4)
                 print(id, prodname, manuf, prodcount, pricee)
+            sql = QtSql.QSqlQuery()
+            sql.exec("SELECT Distinct TABLE_NAME FROM information_schema.TABLES")
+            self.arr_table_name = []
+            while sql.next():
+                print(sql.value(0))
+                self.arr_table_name.append(sql.value(0))
             '''with open('connect.txt', 'r') as connect_file:
                 driver = connect_file.readline().strip()
                 server = connect_file.readline().strip()
@@ -48,7 +54,8 @@ class Data:
             for row in records:
                 print(f"Строка: {row}")'''
             return print("Connection succesfull")
-        except:
+        except Exception as e:
+            print(e)
             QtWidgets.QMessageBox.critical(None, "Failed connection", "Не удалось подключиться к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)
             return sys.exit()
     
@@ -60,11 +67,12 @@ class Data:
                 query.addBindValue(query_value)
         query.exec()
     
-    def new_record_query(self, pname, manuf, pcount, price):
+    def new_record_query(self, table, pname, manuf, pcount, price):
         try:
-            sql_query = "INSERT INTO Products (ProductName, Manufacturer, ProductCount, Price) VALUES (?, ?, ?, ?)"
+            sql_query = f"INSERT INTO {table} (ProductName, Manufacturer, ProductCount, Price) VALUES (?, ?, ?, ?)"
             self.execute_query_with_params(sql_query, [pname, manuf, pcount, price])
-        except:
+        except Exception as e:
+            print(e)
             QtWidgets.QMessageBox.critical(None, "Failed request", "Не удалось выполнить запрос к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)
     
     def edit_record_query(self, pname, manuf, pcount, price, id):
