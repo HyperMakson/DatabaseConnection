@@ -5,7 +5,6 @@ import sys
 class Data:
     def __init__(self):
         super(Data, self).__init__()
-        self.create_connection()
     
     def create_connection(self):
         try:
@@ -31,12 +30,6 @@ class Data:
                 prodcount = query.value(3)
                 pricee = query.value(4)
                 print(id, prodname, manuf, prodcount, pricee)
-            sql = QtSql.QSqlQuery()
-            sql.exec("SELECT Distinct TABLE_NAME FROM information_schema.TABLES")
-            self.arr_table_name = []
-            while sql.next():
-                print(sql.value(0))
-                self.arr_table_name.append(sql.value(0))
             '''with open('connect.txt', 'r') as connect_file:
                 driver = connect_file.readline().strip()
                 server = connect_file.readline().strip()
@@ -86,5 +79,29 @@ class Data:
         try:
             sql_query = "DELETE FROM Products WHERE Id = ?"
             self.execute_query_with_params(sql_query, [id])
+        except:
+            QtWidgets.QMessageBox.critical(None, "Failed request", "Не удалось выполнить запрос к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)
+    
+    def select_table_name(self):
+        try:
+            sql = QtSql.QSqlQuery()
+            sql.exec("SELECT Distinct TABLE_NAME FROM information_schema.TABLES")
+            self.arr_table_name = []
+            while sql.next():
+                print(sql.value(0))
+                self.arr_table_name.append(sql.value(0))
+            return self.arr_table_name
+        except:
+            QtWidgets.QMessageBox.critical(None, "Failed request", "Не удалось выполнить запрос к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)
+    
+    def select_column_name(self, table):
+        try:
+            sql = QtSql.QSqlQuery()
+            sql.exec(f"SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{table}';")
+            self.arr_column_name = []
+            while sql.next():
+                print(sql.value(0))
+                self.arr_column_name.append(sql.value(0))
+            return self.arr_column_name
         except:
             QtWidgets.QMessageBox.critical(None, "Failed request", "Не удалось выполнить запрос к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)

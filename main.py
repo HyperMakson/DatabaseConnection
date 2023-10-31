@@ -14,9 +14,10 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         self.connect_db = Data()
+        self.connect_db.create_connection()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.view_data(self.connect_db.arr_table_name[0])
+        self.view_data(self.connect_db.select_table_name()[0])
         #self.setFixedSize(QSize(400, 300))
         self.ui.btn_new_entry.clicked.connect(self.open_dialog_new_window)
         self.ui.btn_edit_entry.clicked.connect(self.open_dialog_edit_window)
@@ -24,11 +25,12 @@ class MainWindow(QMainWindow):
         self.ui.comboBox_name_tables.currentTextChanged.connect(self.view_data)
     
     def open_dialog_new_window(self):
+        self.table = self.ui.comboBox_name_tables.currentText()
+        self.column = self.connect_db.select_column_name(self.table)
         self.new_window = QDialog()
         self.ui_new_window = Ui_Dialog_New()
-        self.ui_new_window.setupUi(self.new_window)
+        self.ui_new_window.setupUi(self.new_window, self.table)
         self.new_window.show()
-        table = self.ui.comboBox_name_tables.currentText()
         self.ui_new_window.btn_new_entry.clicked.connect(self.add_new_record)
     
     def add_new_record(self):
@@ -36,9 +38,8 @@ class MainWindow(QMainWindow):
         text2 = self.ui_new_window.lineEdit_2.text()
         text3 = int(self.ui_new_window.lineEdit_3.text())
         text4 = int(self.ui_new_window.lineEdit_4.text())
-        table = self.ui.comboBox_name_tables.currentText()
-        self.connect_db.new_record_query(table, text1, text2, text3, text4)
-        self.view_data(table)
+        self.connect_db.new_record_query(self.table, text1, text2, text3, text4)
+        self.view_data(self.table)
         self.new_window.close()
     
     def open_dialog_edit_window(self):

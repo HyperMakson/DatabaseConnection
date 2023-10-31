@@ -136,7 +136,7 @@ class Ui_MainWindow(object):
 "}")
         self.comboBox_name_tables.setObjectName("comboBox_name_tables")
         self.edit_ui = Data()
-        self.comboBox_name_tables.addItems(self.edit_ui.arr_table_name)
+        self.comboBox_name_tables.addItems(self.edit_ui.select_table_name())
         self.verticalLayout.addWidget(self.comboBox_name_tables)
         self.view_records = QtWidgets.QTableView(parent=self.centralwidget)
         self.view_records.setStyleSheet("QTableView {\n"
