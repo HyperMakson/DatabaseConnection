@@ -60,10 +60,10 @@ class Data:
                 query.addBindValue(query_value)
         query.exec()
     
-    def new_record_query(self, table, pname, manuf, pcount, price):
+    def new_record_query(self, table, arr_add_text):
         try:
             sql_query = f"INSERT INTO {table} (ProductName, Manufacturer, ProductCount, Price) VALUES (?, ?, ?, ?)"
-            self.execute_query_with_params(sql_query, [pname, manuf, pcount, price])
+            self.execute_query_with_params(sql_query, arr_add_text)
         except Exception as e:
             print(e)
             QtWidgets.QMessageBox.critical(None, "Failed request", "Не удалось выполнить запрос к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)

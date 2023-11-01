@@ -55,20 +55,20 @@ class Ui_Dialog_New(object):
         self.edit_ui = Data()
         self.column = self.edit_ui.select_column_name(table)
         self.dict_obj_name = {}
-        for i in range(len(self.column)):
-            if self.column[i] == 'int':
+        for i in range(1, len(self.column)):
+            if self.column[i] == 'int' or self.column[i] == 'money':
                 self.lineEdit = QtWidgets.QLineEdit(parent=self.frame)
                 self.lineEdit.setMinimumSize(QtCore.QSize(0, 30))
-                self.lineEdit.setObjectName(f"lineEdit_{i+1}")
-                self.dict_obj_name[f"lineEdit_{i+1}"] = self.column[i]
-                setattr(self, f"lineEdit_{i+1}", self.lineEdit)
+                self.lineEdit.setObjectName(f"lineEdit_{i}")
+                self.dict_obj_name[f"lineEdit_{i}"] = self.column[i]
+                setattr(self, f"lineEdit_{i}", self.lineEdit)
                 self.verticalLayout.addWidget(self.lineEdit)
             elif self.column[i] == 'nvarchar':
                 self.lineEdit = QtWidgets.QLineEdit(parent=self.frame)
                 self.lineEdit.setMinimumSize(QtCore.QSize(0, 30))
-                self.lineEdit.setObjectName(f"lineEdit_{i+1}")
-                self.dict_obj_name[f"lineEdit_{i+1}"] = self.column[i]
-                setattr(self, f"lineEdit_{i+1}", self.lineEdit)
+                self.lineEdit.setObjectName(f"lineEdit_{i}")
+                self.dict_obj_name[f"lineEdit_{i}"] = self.column[i]
+                setattr(self, f"lineEdit_{i}", self.lineEdit)
                 self.verticalLayout.addWidget(self.lineEdit)
 
         '''self.lineEdit = QtWidgets.QLineEdit(parent=self.frame)
