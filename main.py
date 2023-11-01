@@ -31,14 +31,27 @@ class MainWindow(QMainWindow):
         self.ui_new_window = Ui_Dialog_New()
         self.ui_new_window.setupUi(self.new_window, self.table)
         self.new_window.show()
+        print(self.ui_new_window.dict_obj_name)
         self.ui_new_window.btn_new_entry.clicked.connect(self.add_new_record)
     
     def add_new_record(self):
+        dict_obj_text = self.ui_new_window.dict_obj_name
+        arr_add_text = []
+        for text_edit, type_data in dict_obj_text.items():
+            text = getattr(self.ui_new_window, text_edit)
+            if type_data == 'int':
+                add_text = int(text.text())
+                arr_add_text.append(add_text)
+                print(add_text)
+            else:
+                add_text = text.text()
+                arr_add_text.append(add_text)
+                print(add_text)
         text1 = self.ui_new_window.lineEdit.text()
-        text2 = self.ui_new_window.lineEdit_2.text()
+        '''text2 = self.ui_new_window.lineEdit_2.text()
         text3 = int(self.ui_new_window.lineEdit_3.text())
-        text4 = int(self.ui_new_window.lineEdit_4.text())
-        self.connect_db.new_record_query(self.table, text1, text2, text3, text4)
+        text4 = int(self.ui_new_window.lineEdit_4.text())'''
+        #self.connect_db.new_record_query(self.table, text1, text2, text3, text4)
         self.view_data(self.table)
         self.new_window.close()
     

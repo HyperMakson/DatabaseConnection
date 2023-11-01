@@ -50,11 +50,28 @@ class Ui_Dialog_New(object):
         self.combox_choose_table.addItem("")
         self.combox_choose_table.addItem("")
         self.combox_choose_table.addItem("")
+        self.verticalLayout.addWidget(self.combox_choose_table)
+
         self.edit_ui = Data()
         self.column = self.edit_ui.select_column_name(table)
-        print(self.column)
-        self.verticalLayout.addWidget(self.combox_choose_table)
-        self.lineEdit = QtWidgets.QLineEdit(parent=self.frame)
+        self.dict_obj_name = {}
+        for i in range(len(self.column)):
+            if self.column[i] == 'int':
+                self.lineEdit = QtWidgets.QLineEdit(parent=self.frame)
+                self.lineEdit.setMinimumSize(QtCore.QSize(0, 30))
+                self.lineEdit.setObjectName(f"lineEdit_{i+1}")
+                self.dict_obj_name[f"lineEdit_{i+1}"] = self.column[i]
+                setattr(self, f"lineEdit_{i+1}", self.lineEdit)
+                self.verticalLayout.addWidget(self.lineEdit)
+            elif self.column[i] == 'nvarchar':
+                self.lineEdit = QtWidgets.QLineEdit(parent=self.frame)
+                self.lineEdit.setMinimumSize(QtCore.QSize(0, 30))
+                self.lineEdit.setObjectName(f"lineEdit_{i+1}")
+                self.dict_obj_name[f"lineEdit_{i+1}"] = self.column[i]
+                setattr(self, f"lineEdit_{i+1}", self.lineEdit)
+                self.verticalLayout.addWidget(self.lineEdit)
+
+        '''self.lineEdit = QtWidgets.QLineEdit(parent=self.frame)
         self.lineEdit.setMinimumSize(QtCore.QSize(0, 30))
         self.lineEdit.setObjectName("lineEdit")
         self.verticalLayout.addWidget(self.lineEdit)
@@ -69,7 +86,7 @@ class Ui_Dialog_New(object):
         self.lineEdit_4 = QtWidgets.QLineEdit(parent=self.frame)
         self.lineEdit_4.setMinimumSize(QtCore.QSize(0, 30))
         self.lineEdit_4.setObjectName("lineEdit_4")
-        self.verticalLayout.addWidget(self.lineEdit_4)
+        self.verticalLayout.addWidget(self.lineEdit_4)'''
         self.btn_new_entry = QtWidgets.QPushButton(parent=self.frame)
         self.btn_new_entry.setMinimumSize(QtCore.QSize(0, 50))
         font = QtGui.QFont()
