@@ -43,10 +43,10 @@ class Data:
             print(e)
             QtWidgets.QMessageBox.critical(None, "Failed request", "Не удалось выполнить запрос к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)
     
-    def edit_record_query(self, pname, manuf, pcount, price, id):
+    def edit_record_query(self, table, arr_edit_text):
         try:
-            sql_query = "UPDATE Products SET ProductName = ?, Manufacturer = ?, ProductCount = ?, Price = ? WHERE Id = ?"
-            self.execute_query_with_params(sql_query, [pname, manuf, pcount, price, id])
+            sql_query = f"UPDATE {table} SET ProductName = ?, Manufacturer = ?, ProductCount = ?, Price = ? WHERE Id = ?"
+            self.execute_query_with_params(sql_query, arr_edit_text)
         except:
             QtWidgets.QMessageBox.critical(None, "Failed request", "Не удалось выполнить запрос к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)
     
@@ -63,7 +63,6 @@ class Data:
             sql.exec("SELECT Distinct TABLE_NAME FROM information_schema.TABLES")
             self.arr_table_name = []
             while sql.next():
-                print(sql.value(0))
                 self.arr_table_name.append(sql.value(0))
             return self.arr_table_name
         except:
@@ -75,7 +74,6 @@ class Data:
             sql.exec(f"SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{table}';")
             self.arr_column_name = []
             while sql.next():
-                print(sql.value(0))
                 self.arr_column_name.append(sql.value(0))
             return self.arr_column_name
         except:
@@ -87,8 +85,24 @@ class Data:
             sql.exec(f"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{table}';")
             self.arr_column_name = []
             while sql.next():
-                print(sql.value(0))
                 self.arr_column_name.append(sql.value(0))
             return self.arr_column_name
+        except:
+            QtWidgets.QMessageBox.critical(None, "Failed request", "Не удалось выполнить запрос к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)
+    
+    def select_current_entry(self, table, id, column):
+        try:
+            print(f"Conn ФАЙЛ: {table}, {id}, {column[0]}")
+            sql = QtSql.QSqlQuery()
+            sql.exec(f"SELECT * FROM {table} WHERE {column[0]} = '{id}';")
+            self.arr_current_entry = []
+            i = 0
+            while sql.next():
+                while sql.value(i) is not None:
+                    print(sql.value(i))
+                    self.arr_current_entry.append(sql.value(i))
+                    i += 1
+                i = 0
+            return self.arr_current_entry
         except:
             QtWidgets.QMessageBox.critical(None, "Failed request", "Не удалось выполнить запрос к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)

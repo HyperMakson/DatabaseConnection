@@ -31,7 +31,6 @@ class MainWindow(QMainWindow):
         self.ui_new_window = Ui_Dialog_New()
         self.ui_new_window.setupUi(self.new_window, self.table)
         self.new_window.show()
-        print(self.ui_new_window.dict_obj_name)
         self.ui_new_window.btn_new_entry.clicked.connect(self.add_new_record)
     
     def add_new_record(self):
@@ -39,48 +38,61 @@ class MainWindow(QMainWindow):
         arr_add_text = []
         for text_edit, type_data in dict_obj_text.items():
             text = getattr(self.ui_new_window, text_edit)
-            if type_data == 'bigint' or type_data == 'numeric' or type_data == 'bit' or type_data == 'smallint' or type_data == 'decimal' or type_data == 'smallmoney' or type_data == 'int' or type_data == 'tinyint' or type_data == 'money' or type_data == 'float' or type_data == 'real':
+            if type_data == 'bigint' or type_data == 'bit' or type_data == 'smallint' or type_data == 'int' or type_data == 'tinyint':
                 add_text = int(text.text())
                 arr_add_text.append(add_text)
-                print(add_text)
+            elif type_data == 'float' or type_data == 'real'  or type_data == 'money' or type_data == 'smallmoney' or type_data == 'numeric' or type_data == 'decimal' :
+                add_text = float(text.text())
+                arr_add_text.append(add_text)
             else:
                 add_text = text.text()
                 arr_add_text.append(add_text)
-                print(add_text)
-        #text1 = self.ui_new_window.lineEdit.text()
         self.connect_db.new_record_query(self.table, arr_add_text)
         self.view_data(self.table)
         self.new_window.close()
     
     def open_dialog_edit_window(self):
+        self.table = self.ui.comboBox_name_tables.currentText()
+        self.column = self.connect_db.select_column_name(self.table)
+        self.index = self.ui.view_records.selectedIndexes()[0]
+        self.id = int(self.ui.view_records.model().data(self.index))
         self.edit_window = QDialog()
         self.ui_edit_window = Ui_Dialog_Edit()
-        self.ui_edit_window.setupUi(self.edit_window)
+        self.ui_edit_window.setupUi(self.edit_window, self.table, self.id)
         self.edit_window.show()
         self.ui_edit_window.btn_edit_entry.clicked.connect(self.edit_current_record)
     
     def edit_current_record(self):
-        index = self.ui.view_records.selectedIndexes()[0]
-        id = int(self.ui.view_records.model().data(index))
-        text1 = self.ui_edit_window.lineEdit.text()
-        text2 = self.ui_edit_window.lineEdit_2.text()
-        text3 = int(self.ui_edit_window.lineEdit_3.text())
-        text4 = int(self.ui_edit_window.lineEdit_4.text())
-        self.connect_db.edit_record_query(text1, text2, text3, text4, id)
-        self.view_data()
+        dict_obj_text = self.ui_edit_window.dict_obj_name
+        arr_edit_text = []
+        for text_edit, type_data in dict_obj_text.items():
+            text = getattr(self.ui_edit_window, text_edit)
+            if type_data == 'bigint' or type_data == 'bit' or type_data == 'smallint' or type_data == 'int' or type_data == 'tinyint':
+                edit_text = int(text.text())
+                arr_edit_text.append(edit_text)
+            elif type_data == 'float' or type_data == 'real'  or type_data == 'money' or type_data == 'smallmoney' or type_data == 'numeric' or type_data == 'decimal' :
+                edit_text = float(text.text())
+                arr_edit_text.append(edit_text)
+            else:
+                edit_text = text.text()
+                arr_edit_text.append(edit_text)
+        arr_edit_text.append(self.id)
+        self.connect_db.edit_record_query(self.table, arr_edit_text)
+        self.view_data(self.table)
         self.edit_window.close()
     
     def delete_current_record(self):
         index = self.ui.view_records.selectedIndexes()[0]
         id = int(self.ui.view_records.model().data(index))
         self.connect_db.del_record_query(id)
-        self.view_data()
+        self.view_data(self.table)
     
     def view_data(self, s):
         print(s)
         self.model = QSqlTableModel(self)
         self.model.setTable(s)
         self.model.select()
+        #self.ui.view_records.setColumnHidden(0, True)
         self.ui.view_records.setModel(self.model)
 
 if __name__ == "__main__":
