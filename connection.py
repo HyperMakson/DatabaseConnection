@@ -21,31 +21,6 @@ class Data:
                 f"Trusted_Connection={trusted_conneection};"
             )
             db.open()
-            query = QtSql.QSqlQuery()
-            query.exec("SELECT * FROM Products")
-            while query.next():
-                id = int(query.value(0))
-                prodname = query.value(1)
-                manuf = str(query.value(2))
-                prodcount = query.value(3)
-                pricee = query.value(4)
-                print(id, prodname, manuf, prodcount, pricee)
-            '''with open('connect.txt', 'r') as connect_file:
-                driver = connect_file.readline().strip()
-                server = connect_file.readline().strip()
-                database = connect_file.readline().strip()
-                trusted_conneection = connect_file.readline().strip()
-            self.conn = pyodbc.connect(
-                f"Driver={driver};"
-                f"Server={server};"
-                f"Database={database};"
-                f"Trusted_Connection={trusted_conneection};"
-            )
-            self.cursor = self.conn.cursor()
-            self.cursor.execute("SELECT * FROM Products")
-            records = self.cursor.fetchall()
-            for row in records:
-                print(f"Строка: {row}")'''
             return print("Connection succesfull")
         except Exception as e:
             print(e)
@@ -94,10 +69,22 @@ class Data:
         except:
             QtWidgets.QMessageBox.critical(None, "Failed request", "Не удалось выполнить запрос к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)
     
-    def select_column_name(self, table):
+    def select_data_type(self, table):
         try:
             sql = QtSql.QSqlQuery()
             sql.exec(f"SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{table}';")
+            self.arr_column_name = []
+            while sql.next():
+                print(sql.value(0))
+                self.arr_column_name.append(sql.value(0))
+            return self.arr_column_name
+        except:
+            QtWidgets.QMessageBox.critical(None, "Failed request", "Не удалось выполнить запрос к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)
+    
+    def select_column_name(self, table):
+        try:
+            sql = QtSql.QSqlQuery()
+            sql.exec(f"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{table}';")
             self.arr_column_name = []
             while sql.next():
                 print(sql.value(0))

@@ -39,7 +39,7 @@ class MainWindow(QMainWindow):
         arr_add_text = []
         for text_edit, type_data in dict_obj_text.items():
             text = getattr(self.ui_new_window, text_edit)
-            if type_data == 'int' or type_data == 'money':
+            if type_data == 'bigint' or type_data == 'numeric' or type_data == 'bit' or type_data == 'smallint' or type_data == 'decimal' or type_data == 'smallmoney' or type_data == 'int' or type_data == 'tinyint' or type_data == 'money' or type_data == 'float' or type_data == 'real':
                 add_text = int(text.text())
                 arr_add_text.append(add_text)
                 print(add_text)
@@ -48,9 +48,6 @@ class MainWindow(QMainWindow):
                 arr_add_text.append(add_text)
                 print(add_text)
         #text1 = self.ui_new_window.lineEdit.text()
-        '''text2 = self.ui_new_window.lineEdit_2.text()
-        text3 = int(self.ui_new_window.lineEdit_3.text())
-        text4 = int(self.ui_new_window.lineEdit_4.text())'''
         self.connect_db.new_record_query(self.table, arr_add_text)
         self.view_data(self.table)
         self.new_window.close()
