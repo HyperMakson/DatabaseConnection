@@ -77,7 +77,7 @@ class MainWindow(QMainWindow):
                 edit_text = text.text()
                 arr_edit_text.append(edit_text)
         arr_edit_text.append(self.id)
-        self.connect_db.edit_record_query(self.table, arr_edit_text)
+        self.connect_db.edit_record_query(self.table, self.column, arr_edit_text)
         self.view_data(self.table)
         self.edit_window.close()
     

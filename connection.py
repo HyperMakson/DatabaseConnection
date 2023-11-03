@@ -44,11 +44,13 @@ class Data:
             print(e)
             QtWidgets.QMessageBox.critical(None, "Failed request", "Не удалось выполнить запрос к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)
     
-    def edit_record_query(self, table, arr_edit_text):
+    def edit_record_query(self, table, column, arr_edit_text):
         try:
-            sql_query = f"UPDATE {table} SET ProductName = ?, Manufacturer = ?, ProductCount = ?, Price = ? WHERE Id = ?"
+            arr_for_edit = [x + ' = ?' for x in column]
+            sql_query = f"UPDATE {table} SET {', '.join(arr_for_edit[1:])} WHERE {column[0]} = ?"
             self.execute_query_with_params(sql_query, arr_edit_text)
-        except:
+        except Exception as e:
+            print(e)
             QtWidgets.QMessageBox.critical(None, "Failed request", "Не удалось выполнить запрос к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)
     
     def del_record_query(self, table, column, id):

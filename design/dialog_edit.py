@@ -47,7 +47,6 @@ class Ui_Dialog_Edit(object):
         self.data_type = self.edit_ui.select_data_type(table)
         self.column = self.edit_ui.select_column_name(table)
         self.entry = self.edit_ui.select_current_entry(table, id, self.column)
-        print(self.entry)
         self.dict_obj_name = {}
         for i in range(1, len(self.data_type)):
             if self.data_type[i] == 'int' or self.data_type[i] == 'money' or self.data_type[i] == 'bigint' or self.data_type[i] == 'smallint' or self.data_type[i] == 'real' or self.data_type[i] == 'float' or self.data_type[i] == 'tinyint' or self.data_type[i] == 'bit' or self.data_type[i] == 'decimal' or self.data_type[i] == 'smallmoney' or self.data_type[i] == 'float' or self.data_type[i] == 'numeric':
