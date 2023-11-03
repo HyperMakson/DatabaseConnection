@@ -52,15 +52,22 @@ class MainWindow(QMainWindow):
         self.new_window.close()
     
     def open_dialog_edit_window(self):
-        self.table = self.ui.comboBox_name_tables.currentText()
-        self.column = self.connect_db.select_column_name(self.table)
-        self.index = self.ui.view_records.selectedIndexes()[0]
-        self.id = int(self.ui.view_records.model().data(self.index))
-        self.edit_window = QDialog()
-        self.ui_edit_window = Ui_Dialog_Edit()
-        self.ui_edit_window.setupUi(self.edit_window, self.table, self.id)
-        self.edit_window.show()
-        self.ui_edit_window.btn_edit_entry.clicked.connect(self.edit_current_record)
+        selection_model = self.ui.view_records.selectionModel()
+        if selection_model.hasSelection() is False:
+            QtWidgets.QMessageBox.information(None, "No id selected", "Сначала нужно выбрать id в таблице", QtWidgets.QMessageBox.StandardButton.Cancel)
+        else:
+            self.table = self.ui.comboBox_name_tables.currentText()
+            self.column = self.connect_db.select_column_name(self.table)
+            self.index = self.ui.view_records.selectedIndexes()[0]
+            try:
+                self.id = int(self.ui.view_records.model().data(self.index))
+                self.edit_window = QDialog()
+                self.ui_edit_window = Ui_Dialog_Edit()
+                self.ui_edit_window.setupUi(self.edit_window, self.table, self.id)
+                self.edit_window.show()
+                self.ui_edit_window.btn_edit_entry.clicked.connect(self.edit_current_record)
+            except:
+                QtWidgets.QMessageBox.critical(None, "Incorrect id", "Неправильно выбрано id", QtWidgets.QMessageBox.StandardButton.Cancel)
     
     def edit_current_record(self):
         dict_obj_text = self.ui_edit_window.dict_obj_name
@@ -82,15 +89,19 @@ class MainWindow(QMainWindow):
         self.edit_window.close()
     
     def delete_current_record(self):
-        self.table = self.ui.comboBox_name_tables.currentText()
-        self.column = self.connect_db.select_column_name(self.table)
-        index = self.ui.view_records.selectedIndexes()[0]
-        try:
-            id = int(self.ui.view_records.model().data(index))
-            self.connect_db.del_record_query(self.table, self.column, id)
-        except:
-            QtWidgets.QMessageBox.critical(None, "Incorrect id", "Неправильно выбрано id", QtWidgets.QMessageBox.StandardButton.Cancel)
-        self.view_data(self.table)
+        selection_model = self.ui.view_records.selectionModel()
+        if selection_model.hasSelection() is False:
+            QtWidgets.QMessageBox.information(None, "No id selected", "Сначала нужно выбрать id в таблице", QtWidgets.QMessageBox.StandardButton.Cancel)
+        else:
+            self.table = self.ui.comboBox_name_tables.currentText()
+            self.column = self.connect_db.select_column_name(self.table)
+            index = self.ui.view_records.selectedIndexes()[0]
+            try:
+                id = int(self.ui.view_records.model().data(index))
+                self.connect_db.del_record_query(self.table, self.column, id)
+                self.view_data(self.table)
+            except:
+                QtWidgets.QMessageBox.critical(None, "Incorrect id", "Неправильно выбрано id", QtWidgets.QMessageBox.StandardButton.Cancel)
     
     def view_data(self, s):
         print(s)
