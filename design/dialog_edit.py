@@ -68,6 +68,7 @@ class Ui_Dialog_Edit(object):
                 self.verticalLayout.addLayout(self.horizontalLayout)
                 _translate = QtCore.QCoreApplication.translate
                 self.label.setText(_translate("Dialog", self.column[i]))
+                self.lineEdit.setPlaceholderText(_translate("Dialog", f"Введите {self.column[i]}"))
                 self.lineEdit.setText(_translate("Dialog", str(self.entry[i])))
             elif self.data_type[i] == 'datetime' or self.data_type[i] == 'datetime2' or self.data_type[i] == 'datetimeoffset' or self.data_type[i] == 'smalldatetime':
                 self.horizontalLayout = QtWidgets.QHBoxLayout()
@@ -136,6 +137,7 @@ class Ui_Dialog_Edit(object):
                 self.verticalLayout.addLayout(self.horizontalLayout)
                 _translate = QtCore.QCoreApplication.translate
                 self.label.setText(_translate("Dialog", self.column[i]))
+                self.lineEdit.setPlaceholderText(_translate("Dialog", f"Введите {self.column[i]}"))
                 self.textEdit.setText(_translate("Dialog", self.entry[i]))
             else:
                 self.horizontalLayout = QtWidgets.QHBoxLayout()
@@ -155,6 +157,7 @@ class Ui_Dialog_Edit(object):
                 self.verticalLayout.addLayout(self.horizontalLayout)
                 _translate = QtCore.QCoreApplication.translate
                 self.label.setText(_translate("Dialog", self.column[i]))
+                self.lineEdit.setPlaceholderText(_translate("Dialog", f"Введите {self.column[i]}"))
                 self.lineEdit.setText(_translate("Dialog", self.entry[i]))
 
         self.btn_edit_entry = QtWidgets.QPushButton(parent=self.frame)

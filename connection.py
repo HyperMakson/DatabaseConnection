@@ -35,9 +35,10 @@ class Data:
                 query.addBindValue(query_value)
         query.exec()
     
-    def new_record_query(self, table, arr_add_text):
+    def new_record_query(self, table, column, arr_add_text):
         try:
-            sql_query = f"INSERT INTO {table} (ProductName, Manufacturer, ProductCount, Price) VALUES (?, ?, ?, ?)"
+            arr_question = ['?' for x in range(len(arr_add_text))]
+            sql_query = f"INSERT INTO {table} ({', '.join(column[1:])}) VALUES ({', '.join(arr_question)})"
             self.execute_query_with_params(sql_query, arr_add_text)
         except Exception as e:
             print(e)
@@ -50,9 +51,9 @@ class Data:
         except:
             QtWidgets.QMessageBox.critical(None, "Failed request", "Не удалось выполнить запрос к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)
     
-    def del_record_query(self, id):
+    def del_record_query(self, table, column, id):
         try:
-            sql_query = "DELETE FROM Products WHERE Id = ?"
+            sql_query = f"DELETE FROM {table} WHERE {column[0]} = ?"
             self.execute_query_with_params(sql_query, [id])
         except:
             QtWidgets.QMessageBox.critical(None, "Failed request", "Не удалось выполнить запрос к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)
@@ -92,7 +93,6 @@ class Data:
     
     def select_current_entry(self, table, id, column):
         try:
-            print(f"Conn ФАЙЛ: {table}, {id}, {column[0]}")
             sql = QtSql.QSqlQuery()
             sql.exec(f"SELECT * FROM {table} WHERE {column[0]} = '{id}';")
             self.arr_current_entry = []

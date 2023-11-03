@@ -47,7 +47,7 @@ class MainWindow(QMainWindow):
             else:
                 add_text = text.text()
                 arr_add_text.append(add_text)
-        self.connect_db.new_record_query(self.table, arr_add_text)
+        self.connect_db.new_record_query(self.table, self.column, arr_add_text)
         self.view_data(self.table)
         self.new_window.close()
     
@@ -82,9 +82,14 @@ class MainWindow(QMainWindow):
         self.edit_window.close()
     
     def delete_current_record(self):
+        self.table = self.ui.comboBox_name_tables.currentText()
+        self.column = self.connect_db.select_column_name(self.table)
         index = self.ui.view_records.selectedIndexes()[0]
-        id = int(self.ui.view_records.model().data(index))
-        self.connect_db.del_record_query(id)
+        try:
+            id = int(self.ui.view_records.model().data(index))
+            self.connect_db.del_record_query(self.table, self.column, id)
+        except:
+            QtWidgets.QMessageBox.critical(None, "Incorrect id", "Неправильно выбрано id", QtWidgets.QMessageBox.StandardButton.Cancel)
         self.view_data(self.table)
     
     def view_data(self, s):
