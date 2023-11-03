@@ -16,6 +16,7 @@ class Ui_MainWindow(object):
         MainWindow.resize(800, 600)
         MainWindow.setStyleSheet("background-color: #A8D8EA;\n"
 "font-family: arial rounded mt bold;")
+        MainWindow.setWindowIcon(QtGui.QIcon(":/icon/icons/database_FILL0_wght400_GRAD0_opsz24.svg"))
         self.centralwidget = QtWidgets.QWidget(parent=MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)

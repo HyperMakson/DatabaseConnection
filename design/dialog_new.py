@@ -17,6 +17,7 @@ class Ui_Dialog_New(object):
         Dialog.resize(399, 487)
         Dialog.setStyleSheet("background-color: #A8D8EA;\n"
 "font-family: arial rounded mt bold;")
+        Dialog.setWindowIcon(QtGui.QIcon(":/icon/icons/database_FILL0_wght400_GRAD0_opsz24.svg"))
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(Dialog)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.frame = QtWidgets.QFrame(parent=Dialog)
@@ -187,6 +188,6 @@ class Ui_Dialog_New(object):
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        Dialog.setWindowTitle(_translate("Dialog", "Add entry"))
         self.label_main_name.setText(_translate("Dialog", "Добавление записи"))
         self.btn_new_entry.setText(_translate("Dialog", "Добавить"))
