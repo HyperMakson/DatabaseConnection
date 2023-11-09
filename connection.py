@@ -82,7 +82,8 @@ class Data:
         try:
             sql_query = f"DELETE FROM {table} WHERE {column[0]} = ?"
             self.execute_query_with_params(sql_query, [id])
-        except:
+        except Exception as e:
+            print(e)
             QtWidgets.QMessageBox.critical(None, "Failed request", "Не удалось выполнить запрос к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)
     
     def select_table_name(self):
@@ -93,7 +94,8 @@ class Data:
             while sql.next():
                 self.arr_table_name.append(sql.value(0))
             return self.arr_table_name
-        except:
+        except Exception as e:
+            print(e)
             QtWidgets.QMessageBox.critical(None, "Failed request", "Не удалось выполнить запрос к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)
     
     def select_data_type(self, table):
@@ -104,7 +106,8 @@ class Data:
             while sql.next():
                 self.arr_column_name.append(sql.value(0))
             return self.arr_column_name
-        except:
+        except Exception as e:
+            print(e)
             QtWidgets.QMessageBox.critical(None, "Failed request", "Не удалось выполнить запрос к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)
     
     def select_column_name(self, table):
@@ -115,7 +118,8 @@ class Data:
             while sql.next():
                 self.arr_column_name.append(sql.value(0))
             return self.arr_column_name
-        except:
+        except Exception as e:
+            print(e)
             QtWidgets.QMessageBox.critical(None, "Failed request", "Не удалось выполнить запрос к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)
     
     def select_current_entry(self, table, id, column):
@@ -131,5 +135,6 @@ class Data:
                     i += 1
                 i = 0
             return self.arr_current_entry
-        except:
+        except Exception as e:
+            print(e)
             QtWidgets.QMessageBox.critical(None, "Failed request", "Не удалось выполнить запрос к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)

@@ -1,5 +1,6 @@
 import sys
 import pyodbc
+import socket
 from PyQt6 import QtCore, QtGui, QtWidgets, QtSql
 import design.resources
 from PyQt6.QtCore import Qt, QSize
@@ -46,12 +47,13 @@ class Authentication(QDialog):
     
     def check_auth(self):
         self.type_connection = self.ui_auth_window.comboBox_type_connect.currentText()
-        self.log = self.ui_auth_window.lineEdit.text()
-        self.password = self.ui_auth_window.lineEdit_2.text()
         self.auth_db = Data()
         if self.type_connection == "Windows Authentication":
+            print(socket.gethostname())
             check = self.auth_db.create_connection()
         else:
+            self.log = self.ui_auth_window.lineEdit.text()
+            self.password = self.ui_auth_window.lineEdit_2.text()
             check = self.auth_db.create_connection_with_sql(self.log, self.password)
         if check == True:
             print("Connection succesfull")
