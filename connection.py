@@ -27,6 +27,29 @@ class Data:
             QtWidgets.QMessageBox.critical(None, "Failed connection", "Не удалось подключиться к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)
             return sys.exit()
     
+    def create_connection_with_sql(self):
+        try:
+            with open('connect2.txt', 'r') as connect_file:
+                driver = connect_file.readline().strip()
+                server = connect_file.readline().strip()
+                database = connect_file.readline().strip()
+                username = connect_file.readline().strip()
+                password = connect_file.readline().strip()
+            db = QtSql.QSqlDatabase.addDatabase('QODBC')
+            db.setDatabaseName(
+                f"Driver={driver};"
+                f"Server={server};"
+                f"Database={database};"
+                f"UID={username};"
+                f"PWD={password};"
+            )
+            db.open()
+            return print("Connection succesfull")
+        except Exception as e:
+            print(e)
+            QtWidgets.QMessageBox.critical(None, "Failed connection", "Не удалось подключиться к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)
+            return sys.exit()
+    
     def execute_query_with_params(self, sql_query, query_values=None):
         query = QtSql.QSqlQuery()
         query.prepare(sql_query)
