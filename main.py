@@ -45,10 +45,14 @@ class Authentication(QDialog):
                                      "border: 1px solid state black;")
     
     def check_auth(self):
+        self.type_connection = self.ui_auth_window.comboBox_type_connect.currentText()
         self.log = self.ui_auth_window.lineEdit.text()
         self.password = self.ui_auth_window.lineEdit_2.text()
         self.auth_db = Data()
-        check = self.auth_db.create_connection_with_sql(self.log, self.password)
+        if self.type_connection == "Windows Authentication":
+            check = self.auth_db.create_connection()
+        else:
+            check = self.auth_db.create_connection_with_sql(self.log, self.password)
         if check == True:
             print("Connection succesfull")
             window.start_main()

@@ -8,6 +8,7 @@ class Data:
     
     def create_connection(self):
         try:
+            state = False
             with open('connect.txt', 'r') as connect_file:
                 driver = connect_file.readline().strip()
                 server = connect_file.readline().strip()
@@ -20,8 +21,9 @@ class Data:
                 f"Database={database};"
                 f"Trusted_Connection={trusted_conneection};"
             )
-            db.open()
-            return print("Connection succesfull")
+            if db.open():
+                state = True
+            return state
         except Exception as e:
             print(e)
             QtWidgets.QMessageBox.critical(None, "Failed connection", "Не удалось подключиться к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)
