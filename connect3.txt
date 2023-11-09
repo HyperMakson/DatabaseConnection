@@ -1,0 +1,5 @@
+{ODBC Driver 17 for SQL Server}
+LAPTOP-MAXIM\SQLEXPRESS
+productsdb
+test
+test123

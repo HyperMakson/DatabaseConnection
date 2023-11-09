@@ -8,21 +8,42 @@ from PyQt6.QtSql import QSqlTableModel
 from design.main_design import Ui_MainWindow
 from design.dialog_new import Ui_Dialog_New
 from design.dialog_edit import Ui_Dialog_Edit
+from design.log_pass import Ui_Dialog_Auth
 from connection import Data
+
+class Authentication(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.ui_auth_window = Ui_Dialog_Auth()
+        self.ui_auth_window.setupUi(self)
+        self.ui_auth_window.btn_auth.clicked.connect(self.check_auth)
+    
+    def check_auth(self):
+        self.log = self.ui_auth_window.lineEdit.text()
+        self.password = self.ui_auth_window.lineEdit_2.text()
+        self.auth_db = Data()
+        check = self.auth_db.create_connection_with_sql(self.log, self.password)
+        if check == True:
+            window.start_main()
+        else:
+            QtWidgets.QMessageBox.critical(None, "Failed connection", "Не удалось подключиться к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         self.connect_db = Data()
-        self.connect_db.create_connection()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.view_data(self.connect_db.select_table_name()[0])
-        #self.setFixedSize(QSize(400, 300))
         self.ui.btn_new_entry.clicked.connect(self.open_dialog_new_window)
         self.ui.btn_edit_entry.clicked.connect(self.open_dialog_edit_window)
         self.ui.btn_del_entry.clicked.connect(self.delete_current_record)
         self.ui.comboBox_name_tables.currentTextChanged.connect(self.view_data)
+    
+    def start_main(self):
+        self.ui.comboBox_name_tables.addItems(self.connect_db.select_table_name())
+        self.view_data(self.connect_db.select_table_name()[0])
+        window.show()
+        auth_window.close()
     
     def open_dialog_new_window(self):
         self.table = self.ui.comboBox_name_tables.currentText()
@@ -114,5 +135,6 @@ class MainWindow(QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MainWindow()
-    window.show()
+    auth_window = Authentication()
+    auth_window.show()
     app.exec()
