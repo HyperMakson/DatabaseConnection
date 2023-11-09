@@ -44,7 +44,6 @@ class Data:
             )
             if db.open():
                 state = True
-            print("Connection succesfull")
             return state
         except Exception as e:
             print(e)

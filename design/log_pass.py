@@ -41,6 +41,19 @@ class Ui_Dialog_Auth(object):
         self.label_main_name.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_main_name.setObjectName("label_main_name")
         self.verticalLayout.addWidget(self.label_main_name)
+        self.comboBox_type_connect = QtWidgets.QComboBox(parent=self.frame)
+        self.comboBox_type_connect.setMinimumSize(QtCore.QSize(0, 25))
+        self.comboBox_type_connect.setStyleSheet("QComboBox {\n"
+"background-color: #AA96DA;\n"
+"border-top-left-radius: 10px;\n"
+"border-bottom-left-radius: 10px;\n"
+"color: #FCE38A;\n"
+"font-size: 14px;\n"
+"border: 1px solid white\n"
+"}")
+        self.comboBox_type_connect.setObjectName("comboBox_type_connect")
+        self.comboBox_type_connect.addItems(["SQL Server Authentication", "Windows Authentication"])
+        self.verticalLayout.addWidget(self.comboBox_type_connect)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.label = QtWidgets.QLabel(parent=self.frame)
@@ -52,6 +65,7 @@ class Ui_Dialog_Auth(object):
         self.horizontalLayout.addWidget(self.label)
         self.lineEdit = QtWidgets.QLineEdit(parent=self.frame)
         self.lineEdit.setMinimumSize(QtCore.QSize(0, 30))
+        self.lineEdit.setStyleSheet("border: 1px solid state black;")
         self.lineEdit.setObjectName("lineEdit")
         self.horizontalLayout.addWidget(self.lineEdit)
         self.verticalLayout.addLayout(self.horizontalLayout)
@@ -69,6 +83,7 @@ class Ui_Dialog_Auth(object):
         self.lineEdit_2 = QtWidgets.QLineEdit(parent=self.frame)
         self.lineEdit_2.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
         self.lineEdit_2.setMinimumSize(QtCore.QSize(0, 30))
+        self.lineEdit_2.setStyleSheet("border: 1px solid state black;")
         self.lineEdit_2.setObjectName("lineEdit_2")
         self.horizontalLayout_2.addWidget(self.lineEdit_2)
         self.verticalLayout.addLayout(self.horizontalLayout_2)

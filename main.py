@@ -17,6 +17,32 @@ class Authentication(QDialog):
         self.ui_auth_window = Ui_Dialog_Auth()
         self.ui_auth_window.setupUi(self)
         self.ui_auth_window.btn_auth.clicked.connect(self.check_auth)
+        self.ui_auth_window.comboBox_type_connect.currentTextChanged.connect(self.change_type)
+    
+    def change_type(self):
+        self.type_connection = self.ui_auth_window.comboBox_type_connect.currentText()
+        if self.type_connection == "Windows Authentication":
+            self.ui_auth_window.lineEdit.setDisabled(True)
+            self.ui_auth_window.lineEdit_2.setDisabled(True)
+            self.ui_auth_window.label.setStyleSheet("background-color: rgba(168, 216, 234, 50%);\n"
+                                     "border: 1px solid gray;")
+            self.ui_auth_window.label_2.setStyleSheet("background-color: rgba(168, 216, 234, 50%);\n"
+                                     "border: 1px solid gray;")
+            self.ui_auth_window.lineEdit.setStyleSheet("background-color: rgba(234, 255, 208, 50%);\n"
+                                     "border: 1px solid gray;")
+            self.ui_auth_window.lineEdit_2.setStyleSheet("background-color: rgba(234, 255, 208, 50%);\n"
+                                     "border: 1px solid gray;")
+        else:
+            self.ui_auth_window.lineEdit.setEnabled(True)
+            self.ui_auth_window.lineEdit_2.setEnabled(True)
+            self.ui_auth_window.label.setStyleSheet("background-color: #A8D8EA;\n"
+                                     "border: 1px solid gray;")
+            self.ui_auth_window.label_2.setStyleSheet("background-color: #A8D8EA;\n"
+                                     "border: 1px solid gray;")
+            self.ui_auth_window.lineEdit.setStyleSheet("background-color: #EAFFD0;\n"
+                                     "border: 1px solid state black;")
+            self.ui_auth_window.lineEdit_2.setStyleSheet("background-color: #EAFFD0;\n"
+                                     "border: 1px solid state black;")
     
     def check_auth(self):
         self.log = self.ui_auth_window.lineEdit.text()
@@ -24,6 +50,7 @@ class Authentication(QDialog):
         self.auth_db = Data()
         check = self.auth_db.create_connection_with_sql(self.log, self.password)
         if check == True:
+            print("Connection succesfull")
             window.start_main()
         else:
             QtWidgets.QMessageBox.critical(None, "Failed connection", "Не удалось подключиться к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)
