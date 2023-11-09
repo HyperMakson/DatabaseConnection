@@ -1,10 +1,8 @@
 import sys
-import pyodbc
 import socket
-from PyQt6 import QtCore, QtGui, QtWidgets, QtSql
+from PyQt6 import QtWidgets
 import design.resources
-from PyQt6.QtCore import Qt, QSize
-from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QWidget, QVBoxLayout, QDialog
+from PyQt6.QtWidgets import QApplication, QMainWindow, QDialog
 from PyQt6.QtSql import QSqlTableModel
 from design.main_design import Ui_MainWindow
 from design.dialog_new import Ui_Dialog_New
@@ -49,15 +47,16 @@ class Authentication(QDialog):
         self.type_connection = self.ui_auth_window.comboBox_type_connect.currentText()
         self.auth_db = Data()
         if self.type_connection == "Windows Authentication":
-            print(socket.gethostname())
+            self.user = socket.gethostname()
             check = self.auth_db.create_connection()
         else:
             self.log = self.ui_auth_window.lineEdit.text()
             self.password = self.ui_auth_window.lineEdit_2.text()
+            self.user = self.log
             check = self.auth_db.create_connection_with_sql(self.log, self.password)
         if check == True:
             print("Connection succesfull")
-            window.start_main()
+            window.start_main(self.user)
         else:
             QtWidgets.QMessageBox.critical(None, "Failed connection", "Не удалось подключиться к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)
 
@@ -72,7 +71,9 @@ class MainWindow(QMainWindow):
         self.ui.btn_del_entry.clicked.connect(self.delete_current_record)
         self.ui.comboBox_name_tables.currentTextChanged.connect(self.view_data)
     
-    def start_main(self):
+    def start_main(self, user):
+        self.ui.label_user.setText(f"Пользователь: {user}")
+        self.ui.label_user.adjustSize()
         self.ui.comboBox_name_tables.addItems(self.connect_db.select_table_name())
         self.view_data(self.connect_db.select_table_name()[0])
         window.show()

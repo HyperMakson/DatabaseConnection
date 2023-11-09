@@ -1,5 +1,4 @@
 from PyQt6 import QtWidgets, QtSql
-import pyodbc
 import sys
 
 class Data:
