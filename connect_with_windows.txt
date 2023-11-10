@@ -1,5 +1,4 @@
 {ODBC Driver 17 for SQL Server}
-192.168.0.126,1434
+192.168.0.158,1433
 productsdb
-client
-client123
+yes

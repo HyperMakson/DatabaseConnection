@@ -114,8 +114,8 @@ class Ui_Dialog_Auth(object):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Authorization"))
         self.label_main_name.setText(_translate("Dialog", "Авторизация"))
-        self.label.setText(_translate("Dialog", "Введите логин:"))
+        self.label.setText(_translate("Dialog", "Логин:"))
         self.lineEdit.setPlaceholderText(_translate("Dialog", "Введите логин"))
-        self.label_2.setText(_translate("Dialog", "Введите пароль:"))
+        self.label_2.setText(_translate("Dialog", "Пароль:"))
         self.lineEdit_2.setPlaceholderText(_translate("Dialog", "Введите пароль"))
         self.btn_auth.setText(_translate("Dialog", "Авторизоваться"))

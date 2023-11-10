@@ -66,16 +66,15 @@ class MainWindow(QMainWindow):
         self.connect_db = Data()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+    
+    def start_main(self, user):
+        self.ui.label_user.setText(f"Пользователь: {user}")
+        self.ui.comboBox_name_tables.addItems(self.connect_db.select_table_name())
+        self.view_data(self.connect_db.select_table_name()[0])
         self.ui.btn_new_entry.clicked.connect(self.open_dialog_new_window)
         self.ui.btn_edit_entry.clicked.connect(self.open_dialog_edit_window)
         self.ui.btn_del_entry.clicked.connect(self.delete_current_record)
         self.ui.comboBox_name_tables.currentTextChanged.connect(self.view_data)
-    
-    def start_main(self, user):
-        self.ui.label_user.setText(f"Пользователь: {user}")
-        self.ui.label_user.adjustSize()
-        self.ui.comboBox_name_tables.addItems(self.connect_db.select_table_name())
-        self.view_data(self.connect_db.select_table_name()[0])
         window.show()
         auth_window.close()
     
