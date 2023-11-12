@@ -159,11 +159,13 @@ class MainWindow(QMainWindow):
     
     def view_data(self, s):
         print(s)
+        print(self.connect_db.test())
         self.model = QSqlTableModel(self)
         self.model.setTable(s)
         self.model.select()
         #self.ui.view_records.setColumnHidden(0, True)
         self.ui.view_records.setModel(self.model)
+        self.ui.view_records.resizeColumnsToContents()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

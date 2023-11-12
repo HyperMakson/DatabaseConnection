@@ -171,7 +171,6 @@ class Ui_MainWindow(object):
 "color: #FCE38A;\n"
 "background-color: #AA96DA;\n"
 "}")
-        self.view_records.setShowGrid(False)
         self.view_records.setObjectName("view_records")
         self.verticalLayout.addWidget(self.view_records)
         MainWindow.setCentralWidget(self.centralwidget)

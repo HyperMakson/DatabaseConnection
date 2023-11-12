@@ -262,7 +262,7 @@ background-color: #AA96DA;
 }</string>
       </property>
       <property name="showGrid">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
      </widget>
     </item>
