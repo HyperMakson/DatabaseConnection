@@ -92,7 +92,7 @@ class Data:
             self.arr_table_name = []
             while sql.next():
                 self.arr_table_name.append(sql.value(0))
-            return self.arr_table_name
+            return self.arr_table_name[1:]
         except Exception as e:
             print(e)
             QtWidgets.QMessageBox.critical(None, "Failed request", "Не удалось выполнить запрос к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)
@@ -139,9 +139,14 @@ class Data:
             QtWidgets.QMessageBox.critical(None, "Failed request", "Не удалось выполнить запрос к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)
     
     def test(self):
+        table = 'Ведомость платежей'
+        length = len(table)
         sql = QtSql.QSqlQuery()
-        sql.exec("SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS;")
-        self.arr_column_name = []
+        sql.exec(f"SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE constraint_type = 'FOREIGN KEY' AND table_name='{table}';")
+        self.arr_foreign_key = []
         while sql.next():
-            self.arr_column_name.append(sql.value(0))
-        return self.arr_column_name
+            foreign_key = sql.value(2)
+            pos = foreign_key.find(table)
+            start_pos = pos + length + 1
+            self.arr_foreign_key.append(foreign_key[start_pos:])
+        return self.arr_foreign_key
