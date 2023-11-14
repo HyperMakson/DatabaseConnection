@@ -150,3 +150,16 @@ class Data:
             start_pos = pos + length + 1
             self.arr_foreign_key.append(foreign_key[start_pos:])
         return self.arr_foreign_key
+    
+    def test2(self):
+        table = 'Ведомость платежей'
+        sql = QtSql.QSqlQuery()
+        sql.exec(f"EXEC sp_MSdependencies N'dbo.{table}'")
+        self.arr_foreign_key = []
+        i = 1
+        while sql.next():
+            foreign_key = sql.value(1)
+            if sql.value(3) == i:
+                self.arr_foreign_key.append(foreign_key)
+                i += 1
+        return self.arr_foreign_key
