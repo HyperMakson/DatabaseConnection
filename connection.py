@@ -52,17 +52,24 @@ class Data:
             return sys.exit()
     
     def execute_query_with_params(self, sql_query, query_values=None):
-        query = QtSql.QSqlQuery()
-        query.prepare(sql_query)
-        if query_values is not None:
-            for query_value in query_values:
-                query.addBindValue(query_value)
-        query.exec()
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare(sql_query)
+            if query_values is not None:
+                for query_value in query_values:
+                    query.addBindValue(query_value)
+            query.exec()
+        except Exception as e:
+            print(e)
+            QtWidgets.QMessageBox.critical(None, "Failed request", "Не удалось выполнить запрос к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)
     
     def new_record_query(self, table, column, arr_add_text):
         try:
+            print(arr_add_text)
             arr_question = ['?' for x in range(len(arr_add_text))]
-            sql_query = f"INSERT INTO [{table}] ({', '.join(column[1:])}) VALUES ({', '.join(arr_question)})"
+            print(arr_question)
+            sql_query = f"INSERT INTO [{table}] ([{'], ['.join(column[1:])}]) VALUES ({', '.join(arr_question)});"
+            print(sql_query)
             self.execute_query_with_params(sql_query, arr_add_text)
         except Exception as e:
             print(e)
@@ -100,7 +107,7 @@ class Data:
     def select_data_type(self, table):
         try:
             sql = QtSql.QSqlQuery()
-            sql.exec(f"SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '[{table}]';")
+            sql.exec(f"SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{table}';")
             self.arr_column_name = []
             while sql.next():
                 self.arr_column_name.append(sql.value(0))
@@ -112,7 +119,7 @@ class Data:
     def select_column_name(self, table):
         try:
             sql = QtSql.QSqlQuery()
-            sql.exec(f"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '[{table}]';")
+            sql.exec(f"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{table}';")
             self.arr_column_name = []
             while sql.next():
                 self.arr_column_name.append(sql.value(0))
@@ -142,7 +149,7 @@ class Data:
         table = 'Ведомость платежей'
         length = len(table)
         sql = QtSql.QSqlQuery()
-        sql.exec(f"SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE constraint_type = 'FOREIGN KEY' AND table_name='{table}';")
+        sql.exec(f"SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE constraint_type = 'FOREIGN KEY' AND table_name = '{table}';")
         self.arr_foreign_key = []
         while sql.next():
             foreign_key = sql.value(2)
@@ -163,3 +170,54 @@ class Data:
                 self.arr_foreign_key.append(foreign_key)
                 i += 1
         return self.arr_foreign_key
+    
+    def select_relation(self, table):
+        try:
+            sql = QtSql.QSqlQuery()
+            sql.exec(f"SELECT "
+                     f"f.name AS foreign_key_name "
+                     f",OBJECT_NAME(f.parent_object_id) AS table_name "
+                     f",COL_NAME(fc.parent_object_id, fc.parent_column_id) AS constraint_column_name "
+                     f",OBJECT_NAME (f.referenced_object_id) AS referenced_object "
+                     f",COL_NAME(fc.referenced_object_id, fc.referenced_column_id) AS referenced_column_name "
+                     f"FROM sys.foreign_keys AS f "
+                     f"INNER JOIN sys.foreign_key_columns AS fc "
+                     f"ON f.object_id = fc.constraint_object_id "
+                     f"WHERE f.parent_object_id = OBJECT_ID('dbo.{table}');")
+            self.arr_constraint_keys = []
+            while sql.next():
+                arr_temp = []
+                arr_temp.append(sql.value(1))
+                arr_temp.append(sql.value(2))
+                arr_temp.append(sql.value(3))
+                arr_temp.append(sql.value(4))
+                self.arr_constraint_keys.append(arr_temp)
+            return self.arr_constraint_keys
+        except Exception as e:
+            print(e)
+            QtWidgets.QMessageBox.critical(None, "Failed request", "Не удалось выполнить запрос к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)
+    
+    def select_foreign_values(self, column, table):
+        try:
+            sql = QtSql.QSqlQuery()
+            sql.exec(f"SELECT [{column}] FROM [{table}];")
+            self.arr_constraint_values = []
+            while sql.next():
+                self.arr_constraint_values.append(str(sql.value(0)))
+            return self.arr_constraint_values
+        except Exception as e:
+            print(e)
+            QtWidgets.QMessageBox.critical(None, "Failed request", "Не удалось выполнить запрос к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)
+    
+    def convert_date(self, date_text):
+        try:
+            print(date_text)
+            sql = QtSql.QSqlQuery()
+            sql.exec(f"SELECT CONVERT(datetime2, '{date_text}');")
+            self.arr_convert = []
+            while sql.next():
+                self.arr_convert.append(str(sql.value(0)))
+            return self.arr_convert
+        except Exception as e:
+            print(e)
+            QtWidgets.QMessageBox.critical(None, "Failed request", "Не удалось выполнить запрос к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)
