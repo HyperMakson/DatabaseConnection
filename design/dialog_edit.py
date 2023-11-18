@@ -110,7 +110,10 @@ class Ui_Dialog_Edit(object):
                         self.comboBox_keys = QtWidgets.QComboBox(parent=self.frame)
                         self.comboBox_keys.setMinimumSize(QtCore.QSize(0, 30))
                         self.comboBox_keys.setObjectName(f"comboBox_keys_{i}")
-                        self.comboBox_keys.addItems(self.edit_ui.select_foreign_values(self.constraint_keys[j][3], self.constraint_keys[j][2]))
+                        self.combo_items = self.edit_ui.select_foreign_values(self.constraint_keys[j][3], self.constraint_keys[j][2])
+                        self.current_item = self.combo_items.index(str(self.entry[i]))
+                        self.comboBox_keys.addItems(self.combo_items)
+                        self.comboBox_keys.setCurrentIndex(self.current_item)
                         self.dict_obj_name[f"comboBox_keys_{i}"] = self.data_type[i]
                         setattr(self, f"comboBox_keys_{i}", self.comboBox_keys)
                         self.horizontalLayout.addWidget(self.comboBox_keys)
@@ -140,7 +143,10 @@ class Ui_Dialog_Edit(object):
                         self.comboBox_keys = QtWidgets.QComboBox(parent=self.frame)
                         self.comboBox_keys.setMinimumSize(QtCore.QSize(0, 30))
                         self.comboBox_keys.setObjectName(f"comboBox_keys_{i}")
-                        self.comboBox_keys.addItems(self.edit_ui.select_foreign_values(self.constraint_keys[j][3], self.constraint_keys[j][2]))
+                        self.combo_items = self.edit_ui.select_foreign_values(self.constraint_keys[j][3], self.constraint_keys[j][2])
+                        self.current_item = self.combo_items.index(str(self.entry[i]))
+                        self.comboBox_keys.addItems(self.combo_items)
+                        self.comboBox_keys.setCurrentIndex(self.current_item)
                         self.dict_obj_name[f"comboBox_keys_{i}"] = self.data_type[i]
                         setattr(self, f"comboBox_keys_{i}", self.comboBox_keys)
                         self.horizontalLayout.addWidget(self.comboBox_keys)
@@ -154,6 +160,7 @@ class Ui_Dialog_Edit(object):
                         self.dict_obj_name[f"dateTimeEdit_{i}"] = self.data_type[i]
                         setattr(self, f"dateTimeEdit_{i}", self.dateTimeEdit)
                         self.horizontalLayout.addWidget(self.dateTimeEdit)
+                        self.dateTimeEdit.setDateTime(self.entry[i])
                 else:
                     self.dateTimeEdit = QtWidgets.QDateTimeEdit(parent=self.frame)
                     self.dateTimeEdit.setMinimumSize(QtCore.QSize(0, 30))
@@ -162,13 +169,17 @@ class Ui_Dialog_Edit(object):
                     self.dict_obj_name[f"dateTimeEdit_{i}"] = self.data_type[i]
                     setattr(self, f"dateTimeEdit_{i}", self.dateTimeEdit)
                     self.horizontalLayout.addWidget(self.dateTimeEdit)
+                    self.dateTimeEdit.setDateTime(self.entry[i])
             elif self.data_type[i] == 'date':
                 if len(self.constraint_keys) != 0:
                     if self.column[i] == self.constraint_keys[j][1]:
                         self.comboBox_keys = QtWidgets.QComboBox(parent=self.frame)
                         self.comboBox_keys.setMinimumSize(QtCore.QSize(0, 30))
                         self.comboBox_keys.setObjectName(f"comboBox_keys_{i}")
-                        self.comboBox_keys.addItems(self.edit_ui.select_foreign_values(self.constraint_keys[j][3], self.constraint_keys[j][2]))
+                        self.combo_items = self.edit_ui.select_foreign_values(self.constraint_keys[j][3], self.constraint_keys[j][2])
+                        self.current_item = self.combo_items.index(str(self.entry[i]))
+                        self.comboBox_keys.addItems(self.combo_items)
+                        self.comboBox_keys.setCurrentIndex(self.current_item)
                         self.dict_obj_name[f"comboBox_keys_{i}"] = self.data_type[i]
                         setattr(self, f"comboBox_keys_{i}", self.comboBox_keys)
                         self.horizontalLayout.addWidget(self.comboBox_keys)
@@ -181,6 +192,7 @@ class Ui_Dialog_Edit(object):
                         self.dict_obj_name[f"dateEdit_{i}"] = self.data_type[i]
                         setattr(self, f"dateEdit_{i}", self.dateEdit)
                         self.horizontalLayout.addWidget(self.dateEdit)
+                        self.dateEdit.setDate(self.entry[i])
                 else:
                     self.dateEdit = QtWidgets.QDateEdit(parent=self.frame)
                     self.dateEdit.setMinimumSize(QtCore.QSize(0, 30))
@@ -188,13 +200,17 @@ class Ui_Dialog_Edit(object):
                     self.dict_obj_name[f"dateEdit_{i}"] = self.data_type[i]
                     setattr(self, f"dateEdit_{i}", self.dateEdit)
                     self.horizontalLayout.addWidget(self.dateEdit)
+                    self.dateEdit.setDate(self.entry[i])
             elif self.data_type[i] == 'time':
                 if len(self.constraint_keys) != 0:
                     if self.column[i] == self.constraint_keys[j][1]:
                         self.comboBox_keys = QtWidgets.QComboBox(parent=self.frame)
                         self.comboBox_keys.setMinimumSize(QtCore.QSize(0, 30))
                         self.comboBox_keys.setObjectName(f"comboBox_keys_{i}")
-                        self.comboBox_keys.addItems(self.edit_ui.select_foreign_values(self.constraint_keys[j][3], self.constraint_keys[j][2]))
+                        self.combo_items = self.edit_ui.select_foreign_values(self.constraint_keys[j][3], self.constraint_keys[j][2])
+                        self.current_item = self.combo_items.index(str(self.entry[i]))
+                        self.comboBox_keys.addItems(self.combo_items)
+                        self.comboBox_keys.setCurrentIndex(self.current_item)
                         self.dict_obj_name[f"comboBox_keys_{i}"] = self.data_type[i]
                         setattr(self, f"comboBox_keys_{i}", self.comboBox_keys)
                         self.horizontalLayout.addWidget(self.comboBox_keys)
@@ -207,6 +223,7 @@ class Ui_Dialog_Edit(object):
                         self.dict_obj_name[f"timeEdit_{i}"] = self.data_type[i]
                         setattr(self, f"timeEdit_{i}", self.timeEdit)
                         self.horizontalLayout.addWidget(self.timeEdit)
+                        self.timeEdit.setTime(self.entry[i])
                 else:
                     self.timeEdit = QtWidgets.QTimeEdit(parent=self.frame)
                     self.timeEdit.setMinimumSize(QtCore.QSize(0, 30))
@@ -214,13 +231,17 @@ class Ui_Dialog_Edit(object):
                     self.dict_obj_name[f"timeEdit_{i}"] = self.data_type[i]
                     setattr(self, f"timeEdit_{i}", self.timeEdit)
                     self.horizontalLayout.addWidget(self.timeEdit)
+                    self.timeEdit.setTime(self.entry[i])
             elif self.data_type[i] == 'text' or self.data_type[i] == 'ntext':
                 if len(self.constraint_keys) != 0:
                     if self.column[i] == self.constraint_keys[j][1]:
                         self.comboBox_keys = QtWidgets.QComboBox(parent=self.frame)
                         self.comboBox_keys.setMinimumSize(QtCore.QSize(0, 30))
                         self.comboBox_keys.setObjectName(f"comboBox_keys_{i}")
-                        self.comboBox_keys.addItems(self.edit_ui.select_foreign_values(self.constraint_keys[j][3], self.constraint_keys[j][2]))
+                        self.combo_items = self.edit_ui.select_foreign_values(self.constraint_keys[j][3], self.constraint_keys[j][2])
+                        self.current_item = self.combo_items.index(str(self.entry[i]))
+                        self.comboBox_keys.addItems(self.combo_items)
+                        self.comboBox_keys.setCurrentIndex(self.current_item)
                         self.dict_obj_name[f"comboBox_keys_{i}"] = self.data_type[i]
                         setattr(self, f"comboBox_keys_{i}", self.comboBox_keys)
                         self.horizontalLayout.addWidget(self.comboBox_keys)
@@ -252,7 +273,10 @@ class Ui_Dialog_Edit(object):
                         self.comboBox_keys = QtWidgets.QComboBox(parent=self.frame)
                         self.comboBox_keys.setMinimumSize(QtCore.QSize(0, 30))
                         self.comboBox_keys.setObjectName(f"comboBox_keys_{i}")
-                        self.comboBox_keys.addItems(self.edit_ui.select_foreign_values(self.constraint_keys[j][3], self.constraint_keys[j][2]))
+                        self.combo_items = self.edit_ui.select_foreign_values(self.constraint_keys[j][3], self.constraint_keys[j][2])
+                        self.current_item = self.combo_items.index(str(self.entry[i]))
+                        self.comboBox_keys.addItems(self.combo_items)
+                        self.comboBox_keys.setCurrentIndex(self.current_item)
                         self.dict_obj_name[f"comboBox_keys_{i}"] = self.data_type[i]
                         setattr(self, f"comboBox_keys_{i}", self.comboBox_keys)
                         self.horizontalLayout.addWidget(self.comboBox_keys)
