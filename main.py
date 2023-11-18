@@ -109,6 +109,7 @@ class MainWindow(QMainWindow):
                     add_text = text.currentText()
                 else:
                     add_text = text.dateTime()
+                    #add_text = text.dateTime().toString('dd-MM-yyyy')
                 arr_add_text.append(add_text)
             elif type_data == 'date':
                 if text_edit[:-2] == "comboBox_keys":
@@ -147,7 +148,8 @@ class MainWindow(QMainWindow):
                 self.ui_edit_window.setupUi(self.edit_window, self.table, self.id)
                 self.edit_window.show()
                 self.ui_edit_window.btn_edit_entry.clicked.connect(self.edit_current_record)
-            except:
+            except Exception as e:
+                print(e)
                 QtWidgets.QMessageBox.critical(None, "Incorrect id", "Неправильно выбрано id", QtWidgets.QMessageBox.StandardButton.Cancel)
     
     def edit_current_record(self):
@@ -156,13 +158,41 @@ class MainWindow(QMainWindow):
         for text_edit, type_data in dict_obj_text.items():
             text = getattr(self.ui_edit_window, text_edit)
             if type_data == 'bigint' or type_data == 'bit' or type_data == 'smallint' or type_data == 'int' or type_data == 'tinyint':
-                edit_text = int(text.text())
+                if text_edit[:-2] == "comboBox_keys":
+                    edit_text = int(text.currentText())
+                else:
+                    edit_text = int(text.text())
                 arr_edit_text.append(edit_text)
             elif type_data == 'float' or type_data == 'real'  or type_data == 'money' or type_data == 'smallmoney' or type_data == 'numeric' or type_data == 'decimal' :
-                edit_text = float(text.text())
+                if text_edit[:-2] == "comboBox_keys":
+                    edit_text = float(text.currentText())
+                else:
+                    edit_text = float(text.text())
+                arr_edit_text.append(edit_text)
+            elif type_data == 'datetime' or type_data == 'datetime2'  or type_data == 'datetimeoffset' or type_data == 'smalldatetime':
+                if text_edit[:-2] == "comboBox_keys":
+                    edit_text = text.currentText()
+                else:
+                    edit_text = text.dateTime()
+                    #edit_text = text.dateTime().toString('dd-MM-yyyy')
+                arr_edit_text.append(edit_text)
+            elif type_data == 'date':
+                if text_edit[:-2] == "comboBox_keys":
+                    edit_text = text.currentText()
+                else:
+                    edit_text = text.date()
+                arr_edit_text.append(edit_text)
+            elif type_data == 'time':
+                if text_edit[:-2] == "comboBox_keys":
+                    edit_text = text.currentText()
+                else:
+                    edit_text = text.time()
                 arr_edit_text.append(edit_text)
             else:
-                edit_text = text.text()
+                if text_edit[:-2] == "comboBox_keys":
+                    edit_text = text.currentText()
+                else:
+                    edit_text = text.text()
                 arr_edit_text.append(edit_text)
         arr_edit_text.append(self.id)
         self.connect_db.edit_record_query(self.table, self.column, arr_edit_text)
@@ -181,13 +211,12 @@ class MainWindow(QMainWindow):
                 id = int(self.ui.view_records.model().data(index))
                 self.connect_db.del_record_query(self.table, self.column, id)
                 self.view_data(self.table)
-            except:
+            except Exception as e:
+                print(e)
                 QtWidgets.QMessageBox.critical(None, "Incorrect id", "Неправильно выбрано id", QtWidgets.QMessageBox.StandardButton.Cancel)
     
     def view_data(self, s):
         print(s)
-        #print(self.connect_db.select_relation(s))
-        #print(self.connect_db.select_foreign_values("ИНН физического лица", "Налогоплательщики"))
         self.model = QSqlTableModel(self)
         self.model.setTable(s)
         self.model.select()

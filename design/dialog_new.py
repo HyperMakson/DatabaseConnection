@@ -38,11 +38,8 @@ class Ui_Dialog_New(object):
 
         self.edit_ui = Data()
         self.data_type = self.edit_ui.select_data_type(table)
-        print(self.data_type)
         self.column = self.edit_ui.select_column_name(table)
-        print(self.column)
         self.constraint_keys = self.edit_ui.select_relation(table)
-        print(self.constraint_keys)
         j = 0
         self.dict_obj_name = {}
         for i in range(1, len(self.data_type)):
@@ -50,7 +47,7 @@ class Ui_Dialog_New(object):
             self.horizontalLayout.setObjectName(f"horizontalLayout_{i}")
             self.label = QtWidgets.QLabel(parent=self.frame)
             self.label.setMinimumSize(QtCore.QSize(150, 0))
-            self.label.setMaximumSize(QtCore.QSize(150, 16777215))
+            self.label.setMaximumSize(QtCore.QSize(150, 300))
             self.label.setWordWrap(True)
             self.label.setStyleSheet("background-color: #A8D8EA;\n"
                                         "border: 1px solid gray;")
@@ -60,7 +57,7 @@ class Ui_Dialog_New(object):
             if self.data_type[i] == 'int' or self.data_type[i] == 'money' or self.data_type[i] == 'bigint' or self.data_type[i] == 'smallint' or self.data_type[i] == 'real' or self.data_type[i] == 'float' or self.data_type[i] == 'tinyint' or self.data_type[i] == 'bit' or self.data_type[i] == 'decimal' or self.data_type[i] == 'smallmoney' or self.data_type[i] == 'float' or self.data_type[i] == 'numeric':
                 if len(self.constraint_keys) != 0:
                     if self.column[i] == self.constraint_keys[j][1]:
-                        print(self.constraint_keys[j][1])
+                        #print(self.constraint_keys[j][1])
                         self.comboBox_keys = QtWidgets.QComboBox(parent=self.frame)
                         self.comboBox_keys.setMinimumSize(QtCore.QSize(0, 30))
                         self.comboBox_keys.setObjectName(f"comboBox_keys_{i}")
@@ -89,7 +86,6 @@ class Ui_Dialog_New(object):
             elif self.data_type[i] == 'datetime' or self.data_type[i] == 'datetime2' or self.data_type[i] == 'datetimeoffset' or self.data_type[i] == 'smalldatetime':
                 if len(self.constraint_keys) != 0:
                     if self.column[i] == self.constraint_keys[j][1]:
-                        print(self.constraint_keys[j][1])
                         self.comboBox_keys = QtWidgets.QComboBox(parent=self.frame)
                         self.comboBox_keys.setMinimumSize(QtCore.QSize(0, 30))
                         self.comboBox_keys.setObjectName(f"comboBox_keys_{i}")
@@ -118,7 +114,6 @@ class Ui_Dialog_New(object):
             elif self.data_type[i] == 'date':
                 if len(self.constraint_keys) != 0:
                     if self.column[i] == self.constraint_keys[j][1]:
-                        print(self.constraint_keys[j][1])
                         self.comboBox_keys = QtWidgets.QComboBox(parent=self.frame)
                         self.comboBox_keys.setMinimumSize(QtCore.QSize(0, 30))
                         self.comboBox_keys.setObjectName(f"comboBox_keys_{i}")
@@ -145,7 +140,6 @@ class Ui_Dialog_New(object):
             elif self.data_type[i] == 'time':
                 if len(self.constraint_keys) != 0:
                     if self.column[i] == self.constraint_keys[j][1]:
-                        print(self.constraint_keys[j][1])
                         self.comboBox_keys = QtWidgets.QComboBox(parent=self.frame)
                         self.comboBox_keys.setMinimumSize(QtCore.QSize(0, 30))
                         self.comboBox_keys.setObjectName(f"comboBox_keys_{i}")
@@ -172,7 +166,6 @@ class Ui_Dialog_New(object):
             elif self.data_type[i] == 'text' or self.data_type[i] == 'ntext':
                 if len(self.constraint_keys) != 0:
                     if self.column[i] == self.constraint_keys[j][1]:
-                        print(self.constraint_keys[j][1])
                         self.comboBox_keys = QtWidgets.QComboBox(parent=self.frame)
                         self.comboBox_keys.setMinimumSize(QtCore.QSize(0, 30))
                         self.comboBox_keys.setObjectName(f"comboBox_keys_{i}")
@@ -203,7 +196,6 @@ class Ui_Dialog_New(object):
             else:
                 if len(self.constraint_keys) != 0:
                     if self.column[i] == self.constraint_keys[j][1]:
-                        print(self.constraint_keys[j][1])
                         self.comboBox_keys = QtWidgets.QComboBox(parent=self.frame)
                         self.comboBox_keys.setMinimumSize(QtCore.QSize(0, 30))
                         self.comboBox_keys.setObjectName(f"comboBox_keys_{i}")

@@ -65,11 +65,8 @@ class Data:
     
     def new_record_query(self, table, column, arr_add_text):
         try:
-            print(arr_add_text)
             arr_question = ['?' for x in range(len(arr_add_text))]
-            print(arr_question)
             sql_query = f"INSERT INTO [{table}] ([{'], ['.join(column[1:])}]) VALUES ({', '.join(arr_question)});"
-            print(sql_query)
             self.execute_query_with_params(sql_query, arr_add_text)
         except Exception as e:
             print(e)
@@ -77,8 +74,8 @@ class Data:
     
     def edit_record_query(self, table, column, arr_edit_text):
         try:
-            arr_for_edit = [x + ' = ?' for x in column]
-            sql_query = f"UPDATE [{table}] SET {', '.join(arr_for_edit[1:])} WHERE {column[0]} = ?"
+            arr_for_edit = ['[' + x + '] = ?' for x in column]
+            sql_query = f"UPDATE [{table}] SET {', '.join(arr_for_edit[1:])} WHERE [{column[0]}] = ?"
             self.execute_query_with_params(sql_query, arr_edit_text)
         except Exception as e:
             print(e)
@@ -131,12 +128,12 @@ class Data:
     def select_current_entry(self, table, id, column):
         try:
             sql = QtSql.QSqlQuery()
-            sql.exec(f"SELECT * FROM [{table}] WHERE {column[0]} = '{id}';")
+            sql_query = f"SELECT * FROM [{table}] WHERE {column[0]} = '{id}';"
+            sql.exec(f"SELECT * FROM [{table}] WHERE [{column[0]}] = '{id}';")
             self.arr_current_entry = []
             i = 0
             while sql.next():
                 while sql.value(i) is not None:
-                    print(sql.value(i))
                     self.arr_current_entry.append(sql.value(i))
                     i += 1
                 i = 0
@@ -211,7 +208,6 @@ class Data:
     
     def convert_date(self, date_text):
         try:
-            print(date_text)
             sql = QtSql.QSqlQuery()
             sql.exec(f"SELECT CONVERT(datetime2, '{date_text}');")
             self.arr_convert = []

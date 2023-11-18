@@ -40,117 +40,195 @@ class Ui_Dialog_Edit(object):
         self.data_type = self.edit_ui.select_data_type(table)
         self.column = self.edit_ui.select_column_name(table)
         self.entry = self.edit_ui.select_current_entry(table, id, self.column)
+        self.constraint_keys = self.edit_ui.select_relation(table)
+        j = 0
         self.dict_obj_name = {}
         for i in range(1, len(self.data_type)):
+            self.horizontalLayout = QtWidgets.QHBoxLayout()
+            self.horizontalLayout.setObjectName(f"horizontalLayout_{i}")
+            self.label = QtWidgets.QLabel(parent=self.frame)
+            self.label.setMinimumSize(QtCore.QSize(150, 0))
+            self.label.setMaximumSize(QtCore.QSize(150, 300))
+            self.label.setWordWrap(True)
+            self.label.setStyleSheet("background-color: #A8D8EA;\n"
+                                        "border: 1px solid gray;")
+            self.label.setObjectName(f"label_{i}")
+            self.horizontalLayout.addWidget(self.label)
+            _translate = QtCore.QCoreApplication.translate
             if self.data_type[i] == 'int' or self.data_type[i] == 'money' or self.data_type[i] == 'bigint' or self.data_type[i] == 'smallint' or self.data_type[i] == 'real' or self.data_type[i] == 'float' or self.data_type[i] == 'tinyint' or self.data_type[i] == 'bit' or self.data_type[i] == 'decimal' or self.data_type[i] == 'smallmoney' or self.data_type[i] == 'float' or self.data_type[i] == 'numeric':
-                self.horizontalLayout = QtWidgets.QHBoxLayout()
-                self.horizontalLayout.setObjectName(f"horizontalLayout_{i}")
-                self.label = QtWidgets.QLabel(parent=self.frame)
-                self.label.setMinimumSize(QtCore.QSize(100, 0))
-                self.label.setStyleSheet("background-color: #A8D8EA;\n"
-                                         "border: 1px solid gray;")
-                self.label.setObjectName(f"label_{i}")
-                self.horizontalLayout.addWidget(self.label)
-                self.lineEdit = QtWidgets.QLineEdit(parent=self.frame)
-                self.lineEdit.setMinimumSize(QtCore.QSize(0, 30))
-                self.lineEdit.setObjectName(f"lineEdit_{i}")
-                self.dict_obj_name[f"lineEdit_{i}"] = self.data_type[i]
-                setattr(self, f"lineEdit_{i}", self.lineEdit)
-                self.horizontalLayout.addWidget(self.lineEdit)
-                self.verticalLayout.addLayout(self.horizontalLayout)
-                _translate = QtCore.QCoreApplication.translate
-                self.label.setText(_translate("Dialog", self.column[i]))
-                self.lineEdit.setPlaceholderText(_translate("Dialog", f"Введите {self.column[i]}"))
-                self.lineEdit.setText(_translate("Dialog", str(self.entry[i])))
+                if len(self.constraint_keys) != 0:
+                    if self.column[i] == self.constraint_keys[j][1]:
+                        self.comboBox_keys = QtWidgets.QComboBox(parent=self.frame)
+                        self.comboBox_keys.setMinimumSize(QtCore.QSize(0, 30))
+                        self.comboBox_keys.setObjectName(f"comboBox_keys_{i}")
+                        self.comboBox_keys.addItems(self.edit_ui.select_foreign_values(self.constraint_keys[j][3], self.constraint_keys[j][2]))
+                        self.dict_obj_name[f"comboBox_keys_{i}"] = self.data_type[i]
+                        setattr(self, f"comboBox_keys_{i}", self.comboBox_keys)
+                        self.horizontalLayout.addWidget(self.comboBox_keys)
+                        if j < len(self.constraint_keys) - 1:
+                            j += 1
+                    else:
+                        self.lineEdit = QtWidgets.QLineEdit(parent=self.frame)
+                        self.lineEdit.setMinimumSize(QtCore.QSize(0, 30))
+                        self.lineEdit.setObjectName(f"lineEdit_{i}")
+                        self.dict_obj_name[f"lineEdit_{i}"] = self.data_type[i]
+                        setattr(self, f"lineEdit_{i}", self.lineEdit)
+                        self.horizontalLayout.addWidget(self.lineEdit)
+                        self.lineEdit.setPlaceholderText(_translate("Dialog", f"Введите {self.column[i]}"))
+                        self.lineEdit.setText(_translate("Dialog", str(self.entry[i])))
+                else:
+                    self.lineEdit = QtWidgets.QLineEdit(parent=self.frame)
+                    self.lineEdit.setMinimumSize(QtCore.QSize(0, 30))
+                    self.lineEdit.setObjectName(f"lineEdit_{i}")
+                    self.dict_obj_name[f"lineEdit_{i}"] = self.data_type[i]
+                    setattr(self, f"lineEdit_{i}", self.lineEdit)
+                    self.horizontalLayout.addWidget(self.lineEdit)
+                    self.lineEdit.setPlaceholderText(_translate("Dialog", f"Введите {self.column[i]}"))
+                    self.lineEdit.setText(_translate("Dialog", str(self.entry[i])))
             elif self.data_type[i] == 'datetime' or self.data_type[i] == 'datetime2' or self.data_type[i] == 'datetimeoffset' or self.data_type[i] == 'smalldatetime':
-                self.horizontalLayout = QtWidgets.QHBoxLayout()
-                self.horizontalLayout.setObjectName(f"horizontalLayout_{i}")
-                self.label = QtWidgets.QLabel(parent=self.frame)
-                self.label.setMinimumSize(QtCore.QSize(100, 0))
-                self.label.setStyleSheet("background-color: #A8D8EA;\n"
-                                         "border: 1px solid gray;")
-                self.label.setObjectName(f"label_{i}")
-                self.horizontalLayout.addWidget(self.label)
-                self.dateTimeEdit = QtWidgets.QDateTimeEdit(parent=self.frame)
-                self.dateTimeEdit.setMinimumSize(QtCore.QSize(0, 30))
-                self.dateTimeEdit.setObjectName(f"dateTimeEdit_{i}")
-                self.dict_obj_name[f"dateTimeEdit_{i}"] = self.data_type[i]
-                setattr(self, f"dateTimeEdit_{i}", self.dateTimeEdit)
-                self.horizontalLayout.addWidget(self.dateTimeEdit)
-                self.verticalLayout.addLayout(self.horizontalLayout)
+                if len(self.constraint_keys) != 0:
+                    if self.column[i] == self.constraint_keys[j][1]:
+                        self.comboBox_keys = QtWidgets.QComboBox(parent=self.frame)
+                        self.comboBox_keys.setMinimumSize(QtCore.QSize(0, 30))
+                        self.comboBox_keys.setObjectName(f"comboBox_keys_{i}")
+                        self.comboBox_keys.addItems(self.edit_ui.select_foreign_values(self.constraint_keys[j][3], self.constraint_keys[j][2]))
+                        self.dict_obj_name[f"comboBox_keys_{i}"] = self.data_type[i]
+                        setattr(self, f"comboBox_keys_{i}", self.comboBox_keys)
+                        self.horizontalLayout.addWidget(self.comboBox_keys)
+                        if j < len(self.constraint_keys) - 1:
+                            j += 1
+                    else:
+                        self.dateTimeEdit = QtWidgets.QDateTimeEdit(parent=self.frame)
+                        self.dateTimeEdit.setMinimumSize(QtCore.QSize(0, 30))
+                        #self.dateTimeEdit.setDisplayFormat("dd/MM/yyyy")
+                        self.dateTimeEdit.setObjectName(f"dateTimeEdit_{i}")
+                        self.dict_obj_name[f"dateTimeEdit_{i}"] = self.data_type[i]
+                        setattr(self, f"dateTimeEdit_{i}", self.dateTimeEdit)
+                        self.horizontalLayout.addWidget(self.dateTimeEdit)
+                else:
+                    self.dateTimeEdit = QtWidgets.QDateTimeEdit(parent=self.frame)
+                    self.dateTimeEdit.setMinimumSize(QtCore.QSize(0, 30))
+                    #self.dateTimeEdit.setDisplayFormat("dd/MM/yyyy")
+                    self.dateTimeEdit.setObjectName(f"dateTimeEdit_{i}")
+                    self.dict_obj_name[f"dateTimeEdit_{i}"] = self.data_type[i]
+                    setattr(self, f"dateTimeEdit_{i}", self.dateTimeEdit)
+                    self.horizontalLayout.addWidget(self.dateTimeEdit)
             elif self.data_type[i] == 'date':
-                self.horizontalLayout = QtWidgets.QHBoxLayout()
-                self.horizontalLayout.setObjectName(f"horizontalLayout_{i}")
-                self.label = QtWidgets.QLabel(parent=self.frame)
-                self.label.setMinimumSize(QtCore.QSize(100, 0))
-                self.label.setStyleSheet("background-color: #A8D8EA;\n"
-                                         "border: 1px solid gray;")
-                self.label.setObjectName(f"label_{i}")
-                self.horizontalLayout.addWidget(self.label)
-                self.dateEdit = QtWidgets.QDateEdit(parent=self.frame)
-                self.dateEdit.setMinimumSize(QtCore.QSize(0, 30))
-                self.dateEdit.setObjectName(f"dateEdit_{i}")
-                self.dict_obj_name[f"dateEdit_{i}"] = self.data_type[i]
-                setattr(self, f"dateEdit_{i}", self.dateEdit)
-                self.horizontalLayout.addWidget(self.dateEdit)
-                self.verticalLayout.addLayout(self.horizontalLayout)
+                if len(self.constraint_keys) != 0:
+                    if self.column[i] == self.constraint_keys[j][1]:
+                        self.comboBox_keys = QtWidgets.QComboBox(parent=self.frame)
+                        self.comboBox_keys.setMinimumSize(QtCore.QSize(0, 30))
+                        self.comboBox_keys.setObjectName(f"comboBox_keys_{i}")
+                        self.comboBox_keys.addItems(self.edit_ui.select_foreign_values(self.constraint_keys[j][3], self.constraint_keys[j][2]))
+                        self.dict_obj_name[f"comboBox_keys_{i}"] = self.data_type[i]
+                        setattr(self, f"comboBox_keys_{i}", self.comboBox_keys)
+                        self.horizontalLayout.addWidget(self.comboBox_keys)
+                        if j < len(self.constraint_keys) - 1:
+                            j += 1
+                    else:
+                        self.dateEdit = QtWidgets.QDateEdit(parent=self.frame)
+                        self.dateEdit.setMinimumSize(QtCore.QSize(0, 30))
+                        self.dateEdit.setObjectName(f"dateEdit_{i}")
+                        self.dict_obj_name[f"dateEdit_{i}"] = self.data_type[i]
+                        setattr(self, f"dateEdit_{i}", self.dateEdit)
+                        self.horizontalLayout.addWidget(self.dateEdit)
+                else:
+                    self.dateEdit = QtWidgets.QDateEdit(parent=self.frame)
+                    self.dateEdit.setMinimumSize(QtCore.QSize(0, 30))
+                    self.dateEdit.setObjectName(f"dateEdit_{i}")
+                    self.dict_obj_name[f"dateEdit_{i}"] = self.data_type[i]
+                    setattr(self, f"dateEdit_{i}", self.dateEdit)
+                    self.horizontalLayout.addWidget(self.dateEdit)
             elif self.data_type[i] == 'time':
-                self.horizontalLayout = QtWidgets.QHBoxLayout()
-                self.horizontalLayout.setObjectName(f"horizontalLayout_{i}")
-                self.label = QtWidgets.QLabel(parent=self.frame)
-                self.label.setMinimumSize(QtCore.QSize(100, 0))
-                self.label.setStyleSheet("background-color: #A8D8EA;\n"
-                                         "border: 1px solid gray;")
-                self.label.setObjectName(f"label_{i}")
-                self.horizontalLayout.addWidget(self.label)
-                self.timeEdit = QtWidgets.QTimeEdit(parent=self.frame)
-                self.timeEdit.setMinimumSize(QtCore.QSize(0, 30))
-                self.timeEdit.setObjectName(f"timeEdit_{i}")
-                self.dict_obj_name[f"timeEdit_{i}"] = self.data_type[i]
-                setattr(self, f"timeEdit_{i}", self.timeEdit)
-                self.horizontalLayout.addWidget(self.timeEdit)
-                self.verticalLayout.addLayout(self.horizontalLayout)
+                if len(self.constraint_keys) != 0:
+                    if self.column[i] == self.constraint_keys[j][1]:
+                        self.comboBox_keys = QtWidgets.QComboBox(parent=self.frame)
+                        self.comboBox_keys.setMinimumSize(QtCore.QSize(0, 30))
+                        self.comboBox_keys.setObjectName(f"comboBox_keys_{i}")
+                        self.comboBox_keys.addItems(self.edit_ui.select_foreign_values(self.constraint_keys[j][3], self.constraint_keys[j][2]))
+                        self.dict_obj_name[f"comboBox_keys_{i}"] = self.data_type[i]
+                        setattr(self, f"comboBox_keys_{i}", self.comboBox_keys)
+                        self.horizontalLayout.addWidget(self.comboBox_keys)
+                        if j < len(self.constraint_keys) - 1:
+                            j += 1
+                    else:
+                        self.timeEdit = QtWidgets.QTimeEdit(parent=self.frame)
+                        self.timeEdit.setMinimumSize(QtCore.QSize(0, 30))
+                        self.timeEdit.setObjectName(f"timeEdit_{i}")
+                        self.dict_obj_name[f"timeEdit_{i}"] = self.data_type[i]
+                        setattr(self, f"timeEdit_{i}", self.timeEdit)
+                        self.horizontalLayout.addWidget(self.timeEdit)
+                else:
+                    self.timeEdit = QtWidgets.QTimeEdit(parent=self.frame)
+                    self.timeEdit.setMinimumSize(QtCore.QSize(0, 30))
+                    self.timeEdit.setObjectName(f"timeEdit_{i}")
+                    self.dict_obj_name[f"timeEdit_{i}"] = self.data_type[i]
+                    setattr(self, f"timeEdit_{i}", self.timeEdit)
+                    self.horizontalLayout.addWidget(self.timeEdit)
             elif self.data_type[i] == 'text' or self.data_type[i] == 'ntext':
-                self.horizontalLayout = QtWidgets.QHBoxLayout()
-                self.horizontalLayout.setObjectName(f"horizontalLayout_{i}")
-                self.label = QtWidgets.QLabel(parent=self.frame)
-                self.label.setMinimumSize(QtCore.QSize(100, 0))
-                self.label.setStyleSheet("background-color: #A8D8EA;\n"
-                                         "border: 1px solid gray;")
-                self.label.setObjectName(f"label_{i}")
-                self.horizontalLayout.addWidget(self.label)
-                self.textEdit = QtWidgets.QTextEdit(parent=self.frame)
-                self.textEdit.setMinimumSize(QtCore.QSize(0, 0))
-                self.textEdit.setMaximumSize(QtCore.QSize(16777215, 100))
-                self.textEdit.setObjectName(f"textEdit_{i}")
-                self.dict_obj_name[f"textEdit_{i}"] = self.data_type[i]
-                setattr(self, f"textEdit_{i}", self.textEdit)
-                self.horizontalLayout.addWidget(self.textEdit)
-                self.verticalLayout.addLayout(self.horizontalLayout)
-                _translate = QtCore.QCoreApplication.translate
-                self.label.setText(_translate("Dialog", self.column[i]))
-                self.lineEdit.setPlaceholderText(_translate("Dialog", f"Введите {self.column[i]}"))
-                self.textEdit.setText(_translate("Dialog", self.entry[i]))
+                if len(self.constraint_keys) != 0:
+                    if self.column[i] == self.constraint_keys[j][1]:
+                        self.comboBox_keys = QtWidgets.QComboBox(parent=self.frame)
+                        self.comboBox_keys.setMinimumSize(QtCore.QSize(0, 30))
+                        self.comboBox_keys.setObjectName(f"comboBox_keys_{i}")
+                        self.comboBox_keys.addItems(self.edit_ui.select_foreign_values(self.constraint_keys[j][3], self.constraint_keys[j][2]))
+                        self.dict_obj_name[f"comboBox_keys_{i}"] = self.data_type[i]
+                        setattr(self, f"comboBox_keys_{i}", self.comboBox_keys)
+                        self.horizontalLayout.addWidget(self.comboBox_keys)
+                        if j < len(self.constraint_keys) - 1:
+                            j += 1
+                    else:
+                        self.textEdit = QtWidgets.QTextEdit(parent=self.frame)
+                        self.textEdit.setMinimumSize(QtCore.QSize(0, 0))
+                        self.textEdit.setMaximumSize(QtCore.QSize(16777215, 100))
+                        self.textEdit.setObjectName(f"textEdit_{i}")
+                        self.dict_obj_name[f"textEdit_{i}"] = self.data_type[i]
+                        setattr(self, f"textEdit_{i}", self.textEdit)
+                        self.horizontalLayout.addWidget(self.textEdit)
+                        self.textEdit.setPlaceholderText(_translate("Dialog", f"Введите {self.column[i]}"))
+                        self.textEdit.setText(_translate("Dialog", self.entry[i]))
+                else:
+                    self.textEdit = QtWidgets.QTextEdit(parent=self.frame)
+                    self.textEdit.setMinimumSize(QtCore.QSize(0, 0))
+                    self.textEdit.setMaximumSize(QtCore.QSize(16777215, 100))
+                    self.textEdit.setObjectName(f"textEdit_{i}")
+                    self.dict_obj_name[f"textEdit_{i}"] = self.data_type[i]
+                    setattr(self, f"textEdit_{i}", self.textEdit)
+                    self.horizontalLayout.addWidget(self.textEdit)
+                    self.textEdit.setPlaceholderText(_translate("Dialog", f"Введите {self.column[i]}"))
+                    self.textEdit.setText(_translate("Dialog", self.entry[i]))
             else:
-                self.horizontalLayout = QtWidgets.QHBoxLayout()
-                self.horizontalLayout.setObjectName(f"horizontalLayout_{i}")
-                self.label = QtWidgets.QLabel(parent=self.frame)
-                self.label.setMinimumSize(QtCore.QSize(100, 0))
-                self.label.setStyleSheet("background-color: #A8D8EA;\n"
-                                         "border: 1px solid gray;")
-                self.label.setObjectName(f"label_{i}")
-                self.horizontalLayout.addWidget(self.label)
-                self.lineEdit = QtWidgets.QLineEdit(parent=self.frame)
-                self.lineEdit.setMinimumSize(QtCore.QSize(0, 30))
-                self.lineEdit.setObjectName(f"lineEdit_{i}")
-                self.dict_obj_name[f"lineEdit_{i}"] = self.data_type[i]
-                setattr(self, f"lineEdit_{i}", self.lineEdit)
-                self.horizontalLayout.addWidget(self.lineEdit)
-                self.verticalLayout.addLayout(self.horizontalLayout)
-                _translate = QtCore.QCoreApplication.translate
-                self.label.setText(_translate("Dialog", self.column[i]))
-                self.lineEdit.setPlaceholderText(_translate("Dialog", f"Введите {self.column[i]}"))
-                self.lineEdit.setText(_translate("Dialog", self.entry[i]))
+                if len(self.constraint_keys) != 0:
+                    if self.column[i] == self.constraint_keys[j][1]:  
+                        self.comboBox_keys = QtWidgets.QComboBox(parent=self.frame)
+                        self.comboBox_keys.setMinimumSize(QtCore.QSize(0, 30))
+                        self.comboBox_keys.setObjectName(f"comboBox_keys_{i}")
+                        self.comboBox_keys.addItems(self.edit_ui.select_foreign_values(self.constraint_keys[j][3], self.constraint_keys[j][2]))
+                        self.dict_obj_name[f"comboBox_keys_{i}"] = self.data_type[i]
+                        setattr(self, f"comboBox_keys_{i}", self.comboBox_keys)
+                        self.horizontalLayout.addWidget(self.comboBox_keys)
+                        if j < len(self.constraint_keys) - 1:
+                            j += 1
+                    else:
+                        self.lineEdit = QtWidgets.QLineEdit(parent=self.frame)
+                        self.lineEdit.setMinimumSize(QtCore.QSize(0, 30))
+                        self.lineEdit.setObjectName(f"lineEdit_{i}")
+                        self.dict_obj_name[f"lineEdit_{i}"] = self.data_type[i]
+                        setattr(self, f"lineEdit_{i}", self.lineEdit)
+                        self.horizontalLayout.addWidget(self.lineEdit)
+                        self.lineEdit.setPlaceholderText(_translate("Dialog", f"Введите {self.column[i]}"))
+                        self.lineEdit.setText(_translate("Dialog", self.entry[i]))
+                else:
+                    self.lineEdit = QtWidgets.QLineEdit(parent=self.frame)
+                    self.lineEdit.setMinimumSize(QtCore.QSize(0, 30))
+                    self.lineEdit.setObjectName(f"lineEdit_{i}")
+                    self.dict_obj_name[f"lineEdit_{i}"] = self.data_type[i]
+                    setattr(self, f"lineEdit_{i}", self.lineEdit)
+                    self.horizontalLayout.addWidget(self.lineEdit)
+                    self.lineEdit.setPlaceholderText(_translate("Dialog", f"Введите {self.column[i]}"))
+                    self.lineEdit.setText(_translate("Dialog", self.entry[i]))
+            self.verticalLayout.addLayout(self.horizontalLayout)
+            self.label.setText(_translate("Dialog", self.column[i]))
 
         self.btn_edit_entry = QtWidgets.QPushButton(parent=self.frame)
         self.btn_edit_entry.setMinimumSize(QtCore.QSize(0, 50))
