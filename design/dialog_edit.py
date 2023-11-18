@@ -41,8 +41,57 @@ class Ui_Dialog_Edit(object):
         self.column = self.edit_ui.select_column_name(table)
         self.entry = self.edit_ui.select_current_entry(table, id, self.column)
         self.constraint_keys = self.edit_ui.select_relation(table)
+        self.arr_identity = self.edit_ui.check_identity(table, self.column[0])
         j = 0
         self.dict_obj_name = {}
+
+        if self.arr_identity[0] == 0:
+            self.horizontalLayout = QtWidgets.QHBoxLayout()
+            self.horizontalLayout.setObjectName("horizontalLayout_0")
+            self.label = QtWidgets.QLabel(parent=self.frame)
+            self.label.setMinimumSize(QtCore.QSize(150, 0))
+            self.label.setMaximumSize(QtCore.QSize(150, 300))
+            self.label.setWordWrap(True)
+            self.label.setStyleSheet("background-color: #A8D8EA;\n"
+                                        "border: 1px solid gray;")
+            self.label.setObjectName("label_0")
+            self.horizontalLayout.addWidget(self.label)
+            self.lineEdit = QtWidgets.QLineEdit(parent=self.frame)
+            self.lineEdit.setMinimumSize(QtCore.QSize(0, 30))
+            self.lineEdit.setObjectName("lineEdit_0")
+            self.dict_obj_name["lineEdit_0"] = self.data_type[0]
+            setattr(self, "lineEdit_0", self.lineEdit)
+            self.horizontalLayout.addWidget(self.lineEdit)
+            _translate = QtCore.QCoreApplication.translate
+            self.verticalLayout.addLayout(self.horizontalLayout)
+            self.label.setText(_translate("Dialog", self.column[0]))
+            self.lineEdit.setPlaceholderText(_translate("Dialog", f"Введите {self.column[0]}"))
+            self.lineEdit.setText(_translate("Dialog", str(self.entry[0])))
+        else:
+            self.horizontalLayout = QtWidgets.QHBoxLayout()
+            self.horizontalLayout.setObjectName("horizontalLayout_0")
+            self.label = QtWidgets.QLabel(parent=self.frame)
+            self.label.setMinimumSize(QtCore.QSize(150, 0))
+            self.label.setMaximumSize(QtCore.QSize(150, 300))
+            self.label.setWordWrap(True)
+            self.label.setStyleSheet("background-color: rgba(168, 216, 234, 50%);\n"
+                                     "border: 1px solid gray;")
+            self.label.setObjectName("label_0")
+            self.horizontalLayout.addWidget(self.label)
+            self.lineEdit = QtWidgets.QLineEdit(parent=self.frame)
+            self.lineEdit.setMinimumSize(QtCore.QSize(0, 30))
+            self.lineEdit.setStyleSheet("background-color: rgba(168, 216, 234, 50%);\n"
+                                     "border: 1px solid gray;")
+            self.lineEdit.setDisabled(True)
+            self.lineEdit.setObjectName("lineEdit_0")
+            self.dict_obj_name["lineEdit_0"] = self.data_type[0]
+            setattr(self, "lineEdit_0", self.lineEdit)
+            self.horizontalLayout.addWidget(self.lineEdit)
+            _translate = QtCore.QCoreApplication.translate
+            self.verticalLayout.addLayout(self.horizontalLayout)
+            self.label.setText(_translate("Dialog", self.column[0]))
+            self.lineEdit.setPlaceholderText(_translate("Dialog", "Автоинкремент"))
+
         for i in range(1, len(self.data_type)):
             self.horizontalLayout = QtWidgets.QHBoxLayout()
             self.horizontalLayout.setObjectName(f"horizontalLayout_{i}")

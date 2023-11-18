@@ -96,7 +96,10 @@ class MainWindow(QMainWindow):
                 if text_edit[:-2] == "comboBox_keys":
                     add_text = int(text.currentText())
                 else:
-                    add_text = int(text.text())
+                    try:
+                        add_text = int(text.text())
+                    except ValueError:
+                        add_text = text.text()
                 arr_add_text.append(add_text)
             elif type_data == 'float' or type_data == 'real'  or type_data == 'money' or type_data == 'smallmoney' or type_data == 'numeric' or type_data == 'decimal':
                 if text_edit[:-2] == "comboBox_keys":
@@ -161,9 +164,12 @@ class MainWindow(QMainWindow):
                 if text_edit[:-2] == "comboBox_keys":
                     edit_text = int(text.currentText())
                 else:
-                    edit_text = int(text.text())
+                    try:
+                        edit_text = int(text.text())
+                    except ValueError:
+                        edit_text = text.text()
                 arr_edit_text.append(edit_text)
-            elif type_data == 'float' or type_data == 'real'  or type_data == 'money' or type_data == 'smallmoney' or type_data == 'numeric' or type_data == 'decimal' :
+            elif type_data == 'float' or type_data == 'real'  or type_data == 'money' or type_data == 'smallmoney' or type_data == 'numeric' or type_data == 'decimal':
                 if text_edit[:-2] == "comboBox_keys":
                     edit_text = float(text.currentText())
                 else:
@@ -194,7 +200,16 @@ class MainWindow(QMainWindow):
                 else:
                     edit_text = text.text()
                 arr_edit_text.append(edit_text)
-        arr_edit_text.append(self.id)
+        first_type = next(iter(dict_obj_text.values()))
+        print(first_type)
+        if first_type == 'bigint' or first_type == 'bit' or first_type == 'smallint' or first_type == 'int' or first_type == 'tinyint':
+            arr_edit_text.append(self.id)
+            print("int")
+        elif type_data == 'float' or type_data == 'real'  or type_data == 'money' or type_data == 'smallmoney' or type_data == 'numeric' or type_data == 'decimal':
+            arr_edit_text.append(float(self.id))
+        else:
+            arr_edit_text.append(str(self.id))
+            print("str")
         self.connect_db.edit_record_query(self.table, self.column, arr_edit_text)
         self.view_data(self.table)
         self.edit_window.close()

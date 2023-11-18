@@ -65,8 +65,17 @@ class Data:
     
     def new_record_query(self, table, column, arr_add_text):
         try:
-            arr_question = ['?' for x in range(len(arr_add_text))]
-            sql_query = f"INSERT INTO [{table}] ([{'], ['.join(column[1:])}]) VALUES ({', '.join(arr_question)});"
+            print(column)
+            print(arr_add_text)
+            check = self.check_identity(table, column[0])
+            if check[0] == 0:
+                arr_question = ['?' for x in range(len(arr_add_text))]
+                sql_query = f"INSERT INTO [{table}] ([{'], ['.join(column)}]) VALUES ({', '.join(arr_question)});"
+            else:
+                arr_add_text = arr_add_text[1:]
+                arr_question = ['?' for x in range(len(arr_add_text))]
+                sql_query = f"INSERT INTO [{table}] ([{'], ['.join(column[1:])}]) VALUES ({', '.join(arr_question)});"
+                print(sql_query)
             self.execute_query_with_params(sql_query, arr_add_text)
         except Exception as e:
             print(e)
@@ -74,8 +83,20 @@ class Data:
     
     def edit_record_query(self, table, column, arr_edit_text):
         try:
-            arr_for_edit = ['[' + x + '] = ?' for x in column]
-            sql_query = f"UPDATE [{table}] SET {', '.join(arr_for_edit[1:])} WHERE [{column[0]}] = ?"
+            print(arr_edit_text)
+            print(column)
+            check = self.check_identity(table, column[0])
+            if check[0] == 0:
+                arr_for_edit = ['[' + x + '] = ?' for x in column]
+                print(arr_for_edit)
+                sql_query = f"UPDATE [{table}] SET {', '.join(arr_for_edit)} WHERE [{column[0]}] = ?"
+                print("\n")
+                print(sql_query)
+            else:
+                arr_edit_text = arr_edit_text[1:]
+                arr_for_edit = ['[' + x + '] = ?' for x in column]
+                sql_query = f"UPDATE [{table}] SET {', '.join(arr_for_edit[1:])} WHERE [{column[0]}] = ?"
+                print(sql_query)
             self.execute_query_with_params(sql_query, arr_edit_text)
         except Exception as e:
             print(e)
@@ -83,7 +104,7 @@ class Data:
     
     def del_record_query(self, table, column, id):
         try:
-            sql_query = f"DELETE FROM [{table}] WHERE {column[0]} = ?"
+            sql_query = f"DELETE FROM [{table}] WHERE [{column[0]}] = ?"
             self.execute_query_with_params(sql_query, [id])
         except Exception as e:
             print(e)
@@ -128,7 +149,6 @@ class Data:
     def select_current_entry(self, table, id, column):
         try:
             sql = QtSql.QSqlQuery()
-            sql_query = f"SELECT * FROM [{table}] WHERE {column[0]} = '{id}';"
             sql.exec(f"SELECT * FROM [{table}] WHERE [{column[0]}] = '{id}';")
             self.arr_current_entry = []
             i = 0
@@ -214,6 +234,18 @@ class Data:
             while sql.next():
                 self.arr_convert.append(str(sql.value(0)))
             return self.arr_convert
+        except Exception as e:
+            print(e)
+            QtWidgets.QMessageBox.critical(None, "Failed request", "Не удалось выполнить запрос к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)
+    
+    def check_identity(self, table, column):
+        try:
+            sql = QtSql.QSqlQuery()
+            sql.exec(f"SELECT is_identity FROM sys.columns WHERE object_id = object_id('{table}') AND name = '{column}';")
+            self.arr_identity = []
+            while sql.next():
+                self.arr_identity.append(sql.value(0))
+            return self.arr_identity
         except Exception as e:
             print(e)
             QtWidgets.QMessageBox.critical(None, "Failed request", "Не удалось выполнить запрос к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)
