@@ -84,6 +84,7 @@ class MainWindow(QMainWindow):
         self.new_window = QDialog()
         self.ui_new_window = Ui_Dialog_New()
         self.ui_new_window.setupUi(self.new_window, self.table)
+        self.new_window.setModal(True)
         self.new_window.show()
         self.ui_new_window.btn_new_entry.clicked.connect(self.add_new_record)
     
@@ -155,6 +156,7 @@ class MainWindow(QMainWindow):
                 self.edit_window = QDialog()
                 self.ui_edit_window = Ui_Dialog_Edit()
                 self.ui_edit_window.setupUi(self.edit_window, self.table, self.id)
+                self.edit_window.setModal(True)
                 self.edit_window.show()
                 self.ui_edit_window.btn_edit_entry.clicked.connect(self.edit_current_record)
             except Exception as e:

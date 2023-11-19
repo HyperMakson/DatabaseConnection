@@ -8,7 +8,7 @@ class Data:
     def create_connection(self):
         try:
             state = False
-            with open('connect_local.txt', 'r') as connect_file: #ПОТОМ ПОМЕНЯТЬ ДЛЯ WINDOWS SERVER
+            with open('./_internal/connect/connect_with_windows.txt', 'r') as connect_file:
                 driver = connect_file.readline().strip()
                 server = connect_file.readline().strip()
                 database = connect_file.readline().strip()
@@ -31,7 +31,7 @@ class Data:
     def create_connection_with_sql(self, username, password):
         try:
             state = False
-            with open('connect_with_sql.txt', 'r') as connect_file:
+            with open('./_internal/connect/connect_with_sql.txt', 'r') as connect_file:
                 driver = connect_file.readline().strip()
                 server = connect_file.readline().strip()
                 database = connect_file.readline().strip()
