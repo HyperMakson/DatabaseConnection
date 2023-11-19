@@ -104,7 +104,7 @@ class Ui_Dialog_Edit(object):
             self.label.setObjectName(f"label_{i}")
             self.horizontalLayout.addWidget(self.label)
             _translate = QtCore.QCoreApplication.translate
-            if self.data_type[i] == 'int' or self.data_type[i] == 'money' or self.data_type[i] == 'bigint' or self.data_type[i] == 'smallint' or self.data_type[i] == 'real' or self.data_type[i] == 'float' or self.data_type[i] == 'tinyint' or self.data_type[i] == 'bit' or self.data_type[i] == 'decimal' or self.data_type[i] == 'smallmoney' or self.data_type[i] == 'float' or self.data_type[i] == 'numeric':
+            if self.data_type[i] == 'int' or self.data_type[i] == 'money' or self.data_type[i] == 'bigint' or self.data_type[i] == 'smallint' or self.data_type[i] == 'real' or self.data_type[i] == 'float' or self.data_type[i] == 'tinyint' or self.data_type[i] == 'decimal' or self.data_type[i] == 'smallmoney' or self.data_type[i] == 'float' or self.data_type[i] == 'numeric':
                 if len(self.constraint_keys) != 0:
                     if self.column[i] == self.constraint_keys[j][1]:
                         self.comboBox_keys = QtWidgets.QComboBox(parent=self.frame)
@@ -137,6 +137,46 @@ class Ui_Dialog_Edit(object):
                     self.horizontalLayout.addWidget(self.lineEdit)
                     self.lineEdit.setPlaceholderText(_translate("Dialog", f"Введите {self.column[i]}"))
                     self.lineEdit.setText(_translate("Dialog", str(self.entry[i])))
+            elif self.data_type[i] == 'bit':
+                if len(self.constraint_keys) != 0:
+                    if self.column[i] == self.constraint_keys[j][1]:
+                        #print(self.constraint_keys[j][1])
+                        self.comboBox_keys = QtWidgets.QComboBox(parent=self.frame)
+                        self.comboBox_keys.setMinimumSize(QtCore.QSize(0, 30))
+                        self.comboBox_keys.setObjectName(f"comboBox_keys_{i}")
+                        self.combo_items = self.edit_ui.select_foreign_values(self.constraint_keys[j][3], self.constraint_keys[j][2])
+                        self.current_item = self.combo_items.index(str(self.entry[i]))
+                        self.comboBox_keys.addItems(self.combo_items)
+                        self.comboBox_keys.setCurrentIndex(self.current_item)
+                        self.dict_obj_name[f"comboBox_keys_{i}"] = self.data_type[i]
+                        setattr(self, f"comboBox_keys_{i}", self.comboBox_keys)
+                        self.horizontalLayout.addWidget(self.comboBox_keys)
+                        if j < len(self.constraint_keys) - 1:
+                            j += 1
+                    else:
+                        self.comboBox_keys = QtWidgets.QComboBox(parent=self.frame)
+                        self.comboBox_keys.setMinimumSize(QtCore.QSize(0, 30))
+                        self.comboBox_keys.setObjectName(f"comboBox_keys_{i}")
+                        self.arr_bit = ["1", "0"]
+                        self.current_item = self.arr_bit.index(str(self.entry[i]))
+                        print(self.current_item)
+                        self.comboBox_keys.addItems(["True", "False"])
+                        self.comboBox_keys.setCurrentIndex(self.current_item)
+                        self.dict_obj_name[f"comboBox_keys_{i}"] = self.data_type[i]
+                        setattr(self, f"comboBox_keys_{i}", self.comboBox_keys)
+                        self.horizontalLayout.addWidget(self.comboBox_keys)
+                else:
+                    self.comboBox_keys = QtWidgets.QComboBox(parent=self.frame)
+                    self.comboBox_keys.setMinimumSize(QtCore.QSize(0, 30))
+                    self.comboBox_keys.setObjectName(f"comboBox_keys_{i}")
+                    self.arr_bit = ["1", "0"]
+                    self.current_item = self.arr_bit.index(str(self.entry[i]))
+                    print(self.current_item)
+                    self.comboBox_keys.addItems(["True", "False"])
+                    self.comboBox_keys.setCurrentIndex(self.current_item)
+                    self.dict_obj_name[f"comboBox_keys_{i}"] = self.data_type[i]
+                    setattr(self, f"comboBox_keys_{i}", self.comboBox_keys)
+                    self.horizontalLayout.addWidget(self.comboBox_keys)
             elif self.data_type[i] == 'datetime' or self.data_type[i] == 'datetime2' or self.data_type[i] == 'datetimeoffset' or self.data_type[i] == 'smalldatetime':
                 if len(self.constraint_keys) != 0:
                     if self.column[i] == self.constraint_keys[j][1]:

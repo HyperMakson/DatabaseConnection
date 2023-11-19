@@ -92,7 +92,7 @@ class MainWindow(QMainWindow):
         arr_add_text = []
         for text_edit, type_data in dict_obj_text.items():
             text = getattr(self.ui_new_window, text_edit)
-            if type_data == 'bigint' or type_data == 'bit' or type_data == 'smallint' or type_data == 'int' or type_data == 'tinyint':
+            if type_data == 'bigint' or type_data == 'smallint' or type_data == 'int' or type_data == 'tinyint':
                 if text_edit[:-2] == "comboBox_keys":
                     add_text = int(text.currentText())
                 else:
@@ -100,6 +100,12 @@ class MainWindow(QMainWindow):
                         add_text = int(text.text())
                     except ValueError:
                         add_text = text.text()
+                arr_add_text.append(add_text)
+            elif type_data == 'bit':
+                if text_edit[:-2] == "comboBox_keys":
+                    add_text = text.currentText()
+                else:
+                    add_text = text.currentText()
                 arr_add_text.append(add_text)
             elif type_data == 'float' or type_data == 'real'  or type_data == 'money' or type_data == 'smallmoney' or type_data == 'numeric' or type_data == 'decimal':
                 if text_edit[:-2] == "comboBox_keys":
@@ -160,7 +166,7 @@ class MainWindow(QMainWindow):
         arr_edit_text = []
         for text_edit, type_data in dict_obj_text.items():
             text = getattr(self.ui_edit_window, text_edit)
-            if type_data == 'bigint' or type_data == 'bit' or type_data == 'smallint' or type_data == 'int' or type_data == 'tinyint':
+            if type_data == 'bigint' or type_data == 'smallint' or type_data == 'int' or type_data == 'tinyint':
                 if text_edit[:-2] == "comboBox_keys":
                     edit_text = int(text.currentText())
                 else:
@@ -168,6 +174,12 @@ class MainWindow(QMainWindow):
                         edit_text = int(text.text())
                     except ValueError:
                         edit_text = text.text()
+                arr_edit_text.append(edit_text)
+            elif type_data == 'bit':
+                if text_edit[:-2] == "comboBox_keys":
+                    edit_text = text.currentText()
+                else:
+                    edit_text = text.currentText()
                 arr_edit_text.append(edit_text)
             elif type_data == 'float' or type_data == 'real'  or type_data == 'money' or type_data == 'smallmoney' or type_data == 'numeric' or type_data == 'decimal':
                 if text_edit[:-2] == "comboBox_keys":
