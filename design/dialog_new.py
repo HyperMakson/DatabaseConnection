@@ -105,7 +105,6 @@ class Ui_Dialog_New(object):
             if self.data_type[i] == 'int' or self.data_type[i] == 'money' or self.data_type[i] == 'bigint' or self.data_type[i] == 'smallint' or self.data_type[i] == 'real' or self.data_type[i] == 'float' or self.data_type[i] == 'tinyint' or self.data_type[i] == 'decimal' or self.data_type[i] == 'smallmoney' or self.data_type[i] == 'float' or self.data_type[i] == 'numeric':
                 if len(self.constraint_keys) != 0:
                     if self.column[i] == self.constraint_keys[j][1]:
-                        #print(self.constraint_keys[j][1])
                         self.comboBox_keys = QtWidgets.QComboBox(parent=self.frame)
                         self.comboBox_keys.setMinimumSize(QtCore.QSize(0, 30))
                         self.comboBox_keys.setObjectName(f"comboBox_keys_{i}")
@@ -134,7 +133,6 @@ class Ui_Dialog_New(object):
             elif self.data_type[i] == 'bit':
                 if len(self.constraint_keys) != 0:
                     if self.column[i] == self.constraint_keys[j][1]:
-                        #print(self.constraint_keys[j][1])
                         self.comboBox_keys = QtWidgets.QComboBox(parent=self.frame)
                         self.comboBox_keys.setMinimumSize(QtCore.QSize(0, 30))
                         self.comboBox_keys.setObjectName(f"comboBox_keys_{i}")

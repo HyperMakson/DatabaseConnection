@@ -213,15 +213,12 @@ class MainWindow(QMainWindow):
                     edit_text = text.text()
                 arr_edit_text.append(edit_text)
         first_type = next(iter(dict_obj_text.values()))
-        print(first_type)
         if first_type == 'bigint' or first_type == 'bit' or first_type == 'smallint' or first_type == 'int' or first_type == 'tinyint':
             arr_edit_text.append(self.id)
-            print("int")
-        elif type_data == 'float' or type_data == 'real'  or type_data == 'money' or type_data == 'smallmoney' or type_data == 'numeric' or type_data == 'decimal':
+        elif first_type == 'float' or first_type == 'real'  or first_type == 'money' or first_type == 'smallmoney' or first_type == 'numeric' or first_type == 'decimal':
             arr_edit_text.append(float(self.id))
         else:
             arr_edit_text.append(str(self.id))
-            print("str")
         self.connect_db.edit_record_query(self.table, self.column, arr_edit_text)
         self.view_data(self.table)
         self.edit_window.close()
@@ -233,9 +230,17 @@ class MainWindow(QMainWindow):
         else:
             self.table = self.ui.comboBox_name_tables.currentText()
             self.column = self.connect_db.select_column_name(self.table)
+            self.type = self.connect_db.select_data_type(self.table)
             index = self.ui.view_records.selectedIndexes()[0]
             try:
                 id = int(self.ui.view_records.model().data(index))
+                first_type = self.type[0]
+                if first_type == 'bigint' or first_type == 'bit' or first_type == 'smallint' or first_type == 'int' or first_type == 'tinyint':
+                    id = int(id)
+                elif first_type == 'float' or first_type == 'real'  or first_type == 'money' or first_type == 'smallmoney' or first_type == 'numeric' or first_type == 'decimal':
+                    id = float(id)
+                else:
+                    id = str(id)
                 self.connect_db.del_record_query(self.table, self.column, id)
                 self.view_data(self.table)
             except Exception as e:

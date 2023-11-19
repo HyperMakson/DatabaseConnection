@@ -140,7 +140,6 @@ class Ui_Dialog_Edit(object):
             elif self.data_type[i] == 'bit':
                 if len(self.constraint_keys) != 0:
                     if self.column[i] == self.constraint_keys[j][1]:
-                        #print(self.constraint_keys[j][1])
                         self.comboBox_keys = QtWidgets.QComboBox(parent=self.frame)
                         self.comboBox_keys.setMinimumSize(QtCore.QSize(0, 30))
                         self.comboBox_keys.setObjectName(f"comboBox_keys_{i}")
@@ -159,7 +158,6 @@ class Ui_Dialog_Edit(object):
                         self.comboBox_keys.setObjectName(f"comboBox_keys_{i}")
                         self.arr_bit = ["1", "0"]
                         self.current_item = self.arr_bit.index(str(self.entry[i]))
-                        print(self.current_item)
                         self.comboBox_keys.addItems(["True", "False"])
                         self.comboBox_keys.setCurrentIndex(self.current_item)
                         self.dict_obj_name[f"comboBox_keys_{i}"] = self.data_type[i]
@@ -171,7 +169,6 @@ class Ui_Dialog_Edit(object):
                     self.comboBox_keys.setObjectName(f"comboBox_keys_{i}")
                     self.arr_bit = ["1", "0"]
                     self.current_item = self.arr_bit.index(str(self.entry[i]))
-                    print(self.current_item)
                     self.comboBox_keys.addItems(["True", "False"])
                     self.comboBox_keys.setCurrentIndex(self.current_item)
                     self.dict_obj_name[f"comboBox_keys_{i}"] = self.data_type[i]

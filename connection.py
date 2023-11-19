@@ -65,12 +65,11 @@ class Data:
     
     def new_record_query(self, table, column, arr_add_text):
         try:
-            print(column)
-            print(arr_add_text)
             check = self.check_identity(table, column[0])
             if check[0] == 0:
                 arr_question = ['?' for x in range(len(arr_add_text))]
                 sql_query = f"INSERT INTO [{table}] ([{'], ['.join(column)}]) VALUES ({', '.join(arr_question)});"
+                print(sql_query)
             else:
                 arr_add_text = arr_add_text[1:]
                 arr_question = ['?' for x in range(len(arr_add_text))]
@@ -83,14 +82,10 @@ class Data:
     
     def edit_record_query(self, table, column, arr_edit_text):
         try:
-            print(arr_edit_text)
-            print(column)
             check = self.check_identity(table, column[0])
             if check[0] == 0:
                 arr_for_edit = ['[' + x + '] = ?' for x in column]
-                print(arr_for_edit)
                 sql_query = f"UPDATE [{table}] SET {', '.join(arr_for_edit)} WHERE [{column[0]}] = ?"
-                print("\n")
                 print(sql_query)
             else:
                 arr_edit_text = arr_edit_text[1:]
