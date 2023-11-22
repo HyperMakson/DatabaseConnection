@@ -112,7 +112,7 @@ class Data:
             self.arr_table_name = []
             while sql.next():
                 self.arr_table_name.append(sql.value(0))
-            return self.arr_table_name[1:]
+            return self.arr_table_name
         except Exception as e:
             print(e)
             QtWidgets.QMessageBox.critical(None, "Failed request", "Не удалось выполнить запрос к базе данных", QtWidgets.QMessageBox.StandardButton.Cancel)

@@ -1,0 +1,1 @@
+pyinstaller -n "DatabaseConnection" -w --icon=design/icons/database.ico --add-data="design;design" --add-data="_internal/connect;connect" --add-data="design/icons/database.ico;." main.py
