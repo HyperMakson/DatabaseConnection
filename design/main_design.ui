@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Database</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: #A8D8EA;
+font-family: arial rounded mt bold;</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QLabel" name="label_icon">
+        <property name="maximumSize">
+         <size>
+          <width>26</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: #FCE38A;
+border-radius: 10px;
+border: 1px solid black;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap resource="resources.qrc">:/icon/icons/database_FILL0_wght400_GRAD0_opsz24.svg</pixmap>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_main_name">
+        <property name="font">
+         <font>
+          <family>arial rounded mt 13</family>
+          <pointsize>20</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: #AA96DA;
+border-radius: 10px;
+color: #FCE38A;
+border: 1px solid white;</string>
+        </property>
+        <property name="text">
+         <string>База данных</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QPushButton" name="btn_new_entry">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>200</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>arial rounded mt 13</family>
+          <pointsize>-1</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+background-color: #AA96DA;
+border-radius: 10px;
+color: #FCE38A;
+font-size: 14px;
+border: 1px solid white
+}
+QPushButton:hover {
+background-color: #F38181;
+}
+QPushButton:pressed {
+background-color: #EAFFD0;
+}</string>
+        </property>
+        <property name="text">
+         <string>Добавить запись</string>
+        </property>
+        <property name="icon">
+         <iconset resource="resources.qrc">
+          <normaloff>:/icon/icons/add_FILL0_wght400_GRAD0_opsz24.svg</normaloff>:/icon/icons/add_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_edit_entry">
+        <property name="minimumSize">
+         <size>
+          <width>200</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>arial rounded mt 13</family>
+          <pointsize>-1</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+background-color: #AA96DA;
+border-radius: 10px;
+color: #FCE38A;
+font-size: 14px;
+border: 1px solid white
+}
+QPushButton:hover {
+background-color: #F38181;
+}
+QPushButton:pressed {
+background-color: #EAFFD0;
+}</string>
+        </property>
+        <property name="text">
+         <string>Редактировать запись</string>
+        </property>
+        <property name="icon">
+         <iconset resource="resources.qrc">
+          <normaloff>:/icon/icons/edit_FILL0_wght400_GRAD0_opsz24.svg</normaloff>:/icon/icons/edit_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_del_entry">
+        <property name="minimumSize">
+         <size>
+          <width>200</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>arial rounded mt 13</family>
+          <pointsize>-1</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+background-color: #AA96DA;
+border-radius: 10px;
+color: #FCE38A;
+font-size: 14px;
+border: 1px solid white
+}
+QPushButton:hover {
+background-color: #F38181;
+}
+QPushButton:pressed {
+background-color: #EAFFD0;
+}</string>
+        </property>
+        <property name="text">
+         <string>Удалить запись</string>
+        </property>
+        <property name="icon">
+         <iconset resource="resources.qrc">
+          <normaloff>:/icon/icons/delete_FILL0_wght400_GRAD0_opsz24.svg</normaloff>:/icon/icons/delete_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QComboBox" name="comboBox_name_tables">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QComboBox {
+background-color: #AA96DA;
+border-top-left-radius: 10px;
+border-bottom-left-radius: 10px;
+color: #FCE38A;
+font-size: 14px;
+border: 1px solid white
+}</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTableView" name="view_records">
+      <property name="styleSheet">
+       <string notr="true">QTableView {
+background-color: #EAFFD0;
+border-bottom-right-radius: 10px;
+border: 1px solid gray;
+}
+QTableView::section {
+background-color: #AA96DA;
+color: #FCE38A;
+border: none;
+}
+QHeaderView {
+background-color: #EAFFD0;
+}
+QHeaderView::section {
+background-color: #AA96DA;
+color: #FCE38A;
+border: none;
+font-weight: bold;
+}
+QTableView::item {
+border-style: none;
+border-bottom: black;
+}
+QTableView::item:selected {
+border: none;
+color: #FCE38A;
+background-color: #AA96DA;
+}</string>
+      </property>
+      <property name="showGrid">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>
